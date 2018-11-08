@@ -1,8 +1,8 @@
 PLUGIN_TVH
-	EN	tvh.in'
+	EN	TV Headend
 
 PLUGIN_TVH_DESC
-	EN	tvh.in' gives you access to Live Phish Audio Streams
+	EN	TVH give you access to radio stations via TV Headend
 
 PLUGIN_TVH_YEARS
 	EN	Years
