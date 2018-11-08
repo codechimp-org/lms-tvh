@@ -1,0 +1,23 @@
+PLUGIN_TVH
+	EN	tvh.in'
+
+PLUGIN_TVH_DESC
+	EN	tvh.in' gives you access to Live Phish Audio Streams
+
+PLUGIN_TVH_YEARS
+	EN	Years
+
+PLUGIN_TVH_ERA
+	EN	%s Era
+
+PLUGIN_TVH_VENUES
+	EN	Venues
+
+PLUGIN_TVH_SONGS
+	EN	Songs
+
+PLUGIN_TVH_PLACES
+	EN	Places
+
+PLUGIN_TVH_SEARCH
+	EN	Search

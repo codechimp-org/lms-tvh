@@ -1,0 +1,18 @@
+<?xml version='1.0' standalone='yes'?>
+<extension>
+	<name>PLUGIN_TVH</name>
+	<creator>Andrew Jackson &amp; Luke Easter</creator>
+	<defaultState>enabled</defaultState>
+	<description>PLUGIN_TVH_DESC</description>
+	<email>andrew@codechimp.org</email>
+	<id>5b5f0aa8-cf52-4c07-a7ec-251e7c9a1b63</id>
+	<module>Plugins::TVH::Plugin</module>
+	<icon>plugins/TVH/html/icon.png</icon>
+	<targetApplication>
+		<id>SqueezeCenter</id>
+		<maxVersion>*</maxVersion>
+		<minVersion>7.7.6</minVersion>
+	</targetApplication>
+	<type>2</type>
+	<version>0.1.1</version>
+</extension>
