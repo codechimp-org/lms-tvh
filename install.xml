@@ -5,7 +5,7 @@
 	<defaultState>enabled</defaultState>
 	<description>PLUGIN_TVH_DESC</description>
 	<email>andrew@codechimp.org</email>
-	<id>5b5f0aa8-cf52-4c07-a7ec-251e7c9a1b63</id>
+	<id>e7c9277a-f0ad-4bbc-94a9-de2e019b1a2c</id>
 	<module>Plugins::TVH::Plugin</module>
 	<icon>plugins/TVH/html/icon.png</icon>
 	<targetApplication>
@@ -14,5 +14,5 @@
 		<minVersion>7.7.6</minVersion>
 	</targetApplication>
 	<type>2</type>
-	<version>0.1.1</version>
+	<version>0.0.1</version>
 </extension>

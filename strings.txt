@@ -1,8 +1,8 @@
 PLUGIN_TVH
-	EN	TV Headend
+	EN	TVH
 
 PLUGIN_TVH_DESC
-	EN	TVH give you access to radio stations via TV Headend
+	EN	TVH gives you access to TV Headend Radio Streams
 
 PLUGIN_TVH_YEARS
 	EN	Years

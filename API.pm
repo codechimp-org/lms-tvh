@@ -17,7 +17,7 @@ use Slim::Utils::Log;
 use constant API_URL => 'http://phish.in/api/v1/';
 use constant CACHE_TTL => 3600;
 
-my $log = logger('plugin.tvh');
+my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
 
 sub getEras {
@@ -33,7 +33,7 @@ sub getYear {
 		my ($shows) = @_;
 
 		foreach (@$shows) {
-			$cache->set('phishin_show_' . $_->{id}, $_, CACHE_TTL)
+			$cache->set('TVH_show_' . $_->{id}, $_, CACHE_TTL)
 		}
 
 		$cb->($shows);
@@ -70,7 +70,7 @@ sub getSong {
 sub getShow {
 	my ($class, $id, $cb) = @_;
 
-	if ( my $cached = $cache->get('phishin_show_' . $id) ) {
+	if ( my $cached = $cache->get('TVH_show_' . $id) ) {
 		main::INFOLOG && $log->is_info && $log->info("Returning cached data for show $id");
 		main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
 		$cb->($cached);

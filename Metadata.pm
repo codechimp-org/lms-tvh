@@ -11,7 +11,7 @@ use Slim::Utils::Log;
 use Plugins::TVH::Plugin;
 
 use constant ARTIST       => 'TVH';
-use constant CACHE_PREFIX => 'tvh_meta';
+use constant CACHE_PREFIX => 'TVH_meta';
 use constant CACHE_TTL    => 30 * 86400;
 
 my $log = logger('plugin.TVH');

@@ -25,7 +25,7 @@ sub initPlugin {
 
 	Plugins::TVH::Metadata->init();
 
-	# Slim::Menu::GlobalSearch->registerInfoProvider( TVH => (
+	# Slim::Menu::GlobalSearch->registerInfoProvider( tvh => (
 	# 	func => sub {
 	# 		my ( $client, $tags ) = @_;
 
@@ -50,7 +50,7 @@ sub initPlugin {
 
 	$class->SUPER::initPlugin(
 		feed   => \&handleFeed,
-		tag    => 'tvh',
+		tag    => 'TVH',
 		menu   => 'radios',
 		is_app => 1,
 		weight => 1,
