@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 <extension>
 	<name>PLUGIN_TVH</name>
-	<creator>Andrew Jackson &amp; Luke Easter</creator>
+	<creator>Andrew Jackson, Luke Easter</creator>
 	<defaultState>enabled</defaultState>
 	<description>PLUGIN_TVH_DESC</description>
 	<email>andrew@codechimp.org</email>
