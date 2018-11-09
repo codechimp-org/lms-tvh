@@ -22,9 +22,32 @@ PLUGIN_TVH_PLACES
 PLUGIN_TVH_SEARCH
 	EN	Search
 
+PLUGIN_TVH_SERVER
+	EN	Server
+
+PLUGIN_TVH_SERVER_DESC
+	EN	TV Headend Address (IP or name, no HTTP://)
+
+PLUGIN_TVH_PORT
+	EN	Port
+
+PLUGIN_TVH_PORT_DESC
+	EN	TV Headend Port
+
 PLUGIN_TVH_USERNAME
 	EN	Username
 
 PLUGIN_TVH_USERNAME_DESC
-	EN	Enter your username you created in TV Headend
-	
+	EN	TV Headend Username for audio stream profile
+
+PLUGIN_TVH_PASSWORD
+	EN	Password
+
+PLUGIN_TVH_PASSWORD_DESC
+	EN	TV Headend Password for audio stream user
+
+PLUGIN_TVH_TAG
+	EN	Tag
+
+PLUGIN_TVH_TAG_DESC
+	EN	TV Headend Tag for channels to display

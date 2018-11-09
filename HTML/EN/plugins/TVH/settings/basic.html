@@ -3,8 +3,25 @@
 	[% WRAPPER setting title="PLUGIN_TVH" desc="" %]
 		<div class="prefDesc">[% "PLUGIN_TVH_DESC" | string %]</div>
 	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_TVH_SERVER" desc="PLUGIN_TVH_SERVER_DESC" %]
+		<input type="text" class="stdedit" name="server" id="server" value="[% prefs.server %]" size="20">
+	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_TVH_PORT" desc="PLUGIN_TVH_PORT_DESC" %]
+		<input type="text" class="stdedit" name="port" id="port" value="[% prefs.port %]" size="10">
+	[% END %]
+
 	[% WRAPPER setting title="PLUGIN_TVH_USERNAME" desc="PLUGIN_TVH_USERNAME_DESC" %]
 		<input type="text" class="stdedit" name="username" id="username" value="[% prefs.username %]" size="20">
+	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_TVH_PASSWORD" desc="PLUGIN_TVH_PASSWORD_DESC" %]
+		<input type="text" class="stdedit" name="password" id="password" value="[% prefs.password %]" size="20">
+	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_TVH_TAG" desc="PLUGIN_TVH_TAG_DESC" %]
+		<input type="text" class="stdedit" name="tag" id="tag" value="[% prefs.tag %]" size="20">
 	[% END %]
 
 [% PROCESS settings/footer.html %]
