@@ -79,26 +79,15 @@ sub handleFeed {
 
 	my $items = [
 		{
-			name => cstring($client, 'PLUGIN_TVH_YEARS'),
-			type => 'link',
-			url  => \&eras,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_VENUES'),
-			type => 'link',
-			url  => \&venues,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_SONGS'),
-			type => 'link',
-			url  => \&songs,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_PLACES'),
-			type => 'link',
-			url  => \&venuesByPlaces,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_SEARCH'),
-			type => 'search',
-			url  => \&search,
+			name => cstring($client, 'BBC 6 Music'),
+			type => 'audio',
+			url  => 'http://squeeze:squeeze@192.168.1.25:9981/stream/channelnumber/707',
 		}
+#		,{
+#			name => cstring($client, 'PLUGIN_TVH_VENUES'),
+#			type => 'link',
+#			url  => \&venues,
+#		}
 	];
 
 	$cb->({
