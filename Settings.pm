@@ -8,7 +8,7 @@ use Slim::Utils::Prefs;
 my $prefs = preferences('plugin.TVH');
 
 sub prefs {
-	my @prefs = qw(server username password tag);
+	my @prefs = qw(server port username password tag);
 	return ($prefs, @prefs);
 }
 

@@ -81,7 +81,7 @@ sub handleFeed {
 		{
 			name => cstring($client, 'BBC 6 Music'),
 			type => 'audio',
-			url  => 'http://squeeze:squeeze@192.168.1.25:9981/stream/channelnumber/707',
+			url  => 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/stream/channelnumber/707',
 		}
 #		,{
 #			name => cstring($client, 'PLUGIN_TVH_VENUES'),

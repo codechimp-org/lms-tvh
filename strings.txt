@@ -26,7 +26,13 @@ PLUGIN_TVH_SERVER
 	EN	Server
 
 PLUGIN_TVH_SERVER_DESC
-	EN	TV Headend Address (IP:Port)
+	EN	TV Headend Address (IP or name, no HTTP://)
+
+PLUGIN_TVH_PORT
+	EN	Port
+
+PLUGIN_TVH_PORT_DESC
+	EN	TV Headend Port
 
 PLUGIN_TVH_USERNAME
 	EN	Username
