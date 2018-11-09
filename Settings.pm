@@ -5,8 +5,11 @@ use base qw(Slim::Web::Settings);
 
 use Slim::Utils::Prefs;
 
+my $prefs = preferences('plugin.TVH');
+
 sub prefs {
-	return ( preferences('plugin.TVH'), 'username' );
+	my @prefs = qw(server username password tag);
+	return ($prefs, @prefs);
 }
 
 sub name {
