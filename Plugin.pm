@@ -79,15 +79,15 @@ sub handleFeed {
 
 	my $items = [
 		{
-			name => cstring($client, 'BBC 6 Music'),
+			name => 'bbc 6 Music',
 			type => 'audio',
 			url  => 'http://squeeze:squeeze@192.168.1.25:9981/stream/channelnumber/707',
 		}
-#		,{
-#			name => cstring($client, 'PLUGIN_TVH_VENUES'),
-#			type => 'link',
-#			url  => \&venues,
-#		}
+		,{
+			name => cstring($client, 'PLUGIN_TVH_VENUES'),
+			type => 'link',
+			url  => \&stations,
+		}
 	];
 
 	$cb->({
@@ -145,6 +145,21 @@ sub year {
 	});
 }
 
+sub stations {
+	my ($client, $cb, $params, $args) = @_;
+
+	Plugins::TVH::API->getStations(sub {
+		my ($stations) = @_;
+
+		my $items = _renderStations($stations);
+
+		$cb->({
+			items => $items
+		});
+	});
+}
+
+
 sub venues {
 	my ($client, $cb, $params, $args) = @_;
 
@@ -159,6 +174,27 @@ sub venues {
 		});
 	});
 }
+
+
+sub _renderStations {
+	my ($stations) = @_;
+
+	my $items = [];
+
+	foreach (@$stations) {
+		push @$items, {
+			name => $_->{name},
+			line1 => $_->{name},
+			line2 => $_->{number},
+			type => 'audio',
+			image => 'http://192.168.1.25:9981/' .$_->{icon_public_url},
+			url => 'http://squeeze:squeeze@192.168.1.25:9981/stream/channelnumber/' . $_->{number}
+		}
+	}
+
+	return $items;
+}
+
 
 sub _renderVenues {
 	my ($venues) = @_;

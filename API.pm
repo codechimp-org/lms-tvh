@@ -14,11 +14,16 @@ use Slim::Utils::Cache;
 use Slim::Utils::Log;
 # use Slim::Utils::Prefs;
 
-use constant API_URL => 'http://phish.in/api/v1/';
+use constant API_URL => 'http://squeeze:squeeze@192.168.1.25:9981/';
 use constant CACHE_TTL => 3600;
 
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
+
+sub getStations {
+	my ($class, $cb) = @_;
+	_call('/api/channel/grid', $cb)
+}
 
 sub getEras {
 	my ($class, $cb) = @_;
@@ -90,7 +95,7 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = API_URL . $url . '.json';
+	$url = API_URL . $url;
 
 	$params->{per_page} ||= 9999;
 
@@ -131,6 +136,7 @@ sub _call {
 			my $result;
 
 			if ( $response->headers->content_type =~ /json/i ) {
+				$log->error('TVH got a response: ' . $response->content);
 				$result = decode_json(
 					$response->content,
 				);
@@ -141,8 +147,8 @@ sub _call {
 
 			main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($result));
 
-			if ($result && $result->{success} && $result->{data}) {
-				$result = $result->{data};
+			if ($result && $result->{entries}) {
+				$result = $result->{entries};
 
 				if ( $cache_key ) {
 					if ( my $cache_control = $response->headers->header('Cache-Control') ) {
@@ -164,7 +170,7 @@ sub _call {
 		sub {
 			my ($http, $error, $response) = @_;
 
-			$log->error("Got error from phish.in': $error");
+			$log->error("Got error': $error");
 
 			main::INFOLOG && $log->is_info && $log->info(Data::Dump::dump($response));
 			$cb->({
