@@ -7,12 +7,13 @@
 	<email>andrew@codechimp.org</email>
 	<id>e7c9277a-f0ad-4bbc-94a9-de2e019b1a2c</id>
 	<module>Plugins::TVH::Plugin</module>
-	<icon>plugins/TVH/html/icon.png</icon>
+	<optionsURL>plugins/TVH/settings/basic.html</optionsURL>
+	<icon>plugins/TVH/icon.png</icon>
 	<targetApplication>
 		<id>SqueezeCenter</id>
 		<maxVersion>*</maxVersion>
 		<minVersion>7.7.6</minVersion>
 	</targetApplication>
 	<type>2</type>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 </extension>

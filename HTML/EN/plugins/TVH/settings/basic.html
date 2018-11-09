@@ -1,0 +1,10 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="PLUGIN_TVH" desc="" %]
+		<div class="prefDesc">[% "PLUGIN_TVH_DESC" | string %]</div>
+	[% END %]
+	[% WRAPPER setting title="PLUGIN_TVH_USERNAME" desc="PLUGIN_TVH_USERNAME_DESC" %]
+		<input type="text" class="stdedit" name="username" id="username" value="[% prefs.username %]" size="20">
+	[% END %]
+
+[% PROCESS settings/footer.html %]

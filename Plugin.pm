@@ -6,9 +6,14 @@ use base qw(Slim::Plugin::OPMLBased);
 
 use Slim::Utils::Strings qw(string cstring);
 use Slim::Utils::Log;
+use Slim::Utils::Prefs;
 
 use Plugins::TVH::API;
 use Plugins::TVH::Metadata;
+
+use Plugins::TVH::Settings;
+
+my $prefs = preferences('plugin.TVH');
 
 use vars qw($VERSION);
 
@@ -20,6 +25,8 @@ my $log = Slim::Utils::Log->addLogCategory( {
 
 sub initPlugin {
 	my $class = shift;
+
+	Plugins::TVH::Settings->new;
 
 	$VERSION = $class->_pluginDataFor('version');
 

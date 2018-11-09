@@ -21,3 +21,10 @@ PLUGIN_TVH_PLACES
 
 PLUGIN_TVH_SEARCH
 	EN	Search
+
+PLUGIN_TVH_USERNAME
+	EN	Username
+
+PLUGIN_TVH_USERNAME_DESC
+	EN	Enter your username you created in TV Headend
+	
