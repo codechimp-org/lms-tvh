@@ -27,4 +27,9 @@ PLUGIN_TVH_USERNAME
 
 PLUGIN_TVH_USERNAME_DESC
 	EN	Enter your username you created in TV Headend
-	
+
+PLUGIN_TVH_PASSWORD
+	EN	Password
+
+PLUGIN_TVH_PASSWORD_DESC
+	EN	Enter your password you created in TV Headend
