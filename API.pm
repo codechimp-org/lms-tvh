@@ -20,10 +20,59 @@ use constant CACHE_TTL => 3600;
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
 
+#sub getStations {
+#	my ($class, $cb) = @_;
+#	_call('/api/channel/grid', $cb);
+#}
+
 sub getStations {
 	my ($class, $cb) = @_;
-	_call('/api/channel/grid', $cb)
+
+	getChannelTagUuid(sub {
+		my ($uuid) = @_;
+
+		_call('/api/channel/grid', sub {
+			my ($channels) = @_;
+
+			my $stations = [];
+
+			foreach (@$channels) {
+				my ($channel) = @_;
+				#$log->error('TVH debug: ' . $channel->{name} );
+
+				#$log->error('TVH debug: ' . $channel . ' ' . $channel[0]);
+				#my (@tags) = @channel[0];
+
+				#if (grep( /^$uuid$/, @$channel->{tags})) {
+				#}
+					push $stations, $channel;
+			}
+
+			$cb->($channels);
+		});
+	});
 }
+
+sub getChannelTagUuid {
+	my ($cb) = @_;
+
+	my $uuid = '';
+	_call('/api/channeltag/list', sub {
+		my ($tags) = @_;
+
+		foreach (@$tags) {
+			my ($tag) = @_;
+			
+			if (@$tag[0]->{val} == 'Radio channels') {
+				$uuid = @$tag[0]->{key};
+				$log->error('TVH using tag: ' . @$tag[0]->{key});
+			}
+		}
+	});
+	$log->error('TVH using tag uuid: ' . $uuid);
+	$cb->($uuid);
+}
+
 
 sub getEras {
 	my ($class, $cb) = @_;
