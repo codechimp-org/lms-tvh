@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "85137bea-6338-439a-a8b0-780b80f1c07f",
+		"name": "TVHeadend api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get stations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://squeeze:squeeze@192.168.1.25:9981/api/channel/grid?limit=500",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"25"
+					],
+					"auth": {
+						"user": "squeeze",
+						"password": "squeeze"
+					},
+					"port": "9981",
+					"path": [
+						"api",
+						"channel",
+						"grid"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://squeeze:squeeze@192.168.1.25:9981/api/channeltag/list",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"25"
+					],
+					"auth": {
+						"user": "squeeze",
+						"password": "squeeze"
+					},
+					"port": "9981",
+					"path": [
+						"api",
+						"channeltag",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
