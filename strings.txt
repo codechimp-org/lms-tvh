@@ -35,7 +35,7 @@ PLUGIN_TVH_PORT
 	EN	Port
 
 PLUGIN_TVH_PORT_DESC
-	EN	TV Headend Port
+	EN	TV Headend Port (9981)
 
 PLUGIN_TVH_USERNAME
 	EN	Username

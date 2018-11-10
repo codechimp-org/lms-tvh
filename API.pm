@@ -12,10 +12,13 @@ use JSON::XS::VersionOneAndTwo;
 use Slim::Networking::SimpleAsyncHTTP;
 use Slim::Utils::Cache;
 use Slim::Utils::Log;
-# use Slim::Utils::Prefs;
+use Slim::Utils::Prefs;
 
-use constant API_URL => 'http://squeeze:squeeze@192.168.1.25:9981/';
+# use constant API_URL => 'http://squeeze:squeeze@192.168.1.25:9981/';
 use constant CACHE_TTL => 3600;
+
+my $prefs = preferences('plugin.TVH');
+my $api_url = 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
 
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
@@ -95,7 +98,8 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = API_URL . $url;
+	# $url = API_URL . $url;
+	$url = $api_url . $url;
 
 	$params->{per_page} ||= 9999;
 
@@ -142,7 +146,7 @@ sub _call {
 				);
 			}
 			else {
-				$log->error("phish.in didn't return JSON data? " . $response->content);
+				$log->error("TVHeadend didn't return JSON data? " . $response->content);
 			}
 
 			main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($result));
