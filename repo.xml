@@ -1,0 +1,17 @@
+<?xml version='1.0' standalone='yes'?>
+<extensions>
+  <details>
+    <title lang="EN">TVH</title>
+  </details>
+  <plugins>
+    <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="0.0.2">
+      <desc lang="EN">TV Headend Radio Plugin for Logitech Media Server/<desc>
+      <title lang="EN">TVH</title>
+      <email>andrew@codechimp.org</email>
+      <url>http://downloads.sourceforge.net/project/lms-to-upnp/dev/UPnPBridge-1.7.0.zip</url>
+      <link>https://github.com/andrew-codechimp/lms-tvh</link>
+      <sha>028d3023de1345360173e6727ae6c510e9485002</sha>
+      <creator>Andrew Jackson, Luke Easter</creator>
+    </plugin>
+  </plugins>
+</extensions>
