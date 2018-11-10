@@ -22,38 +22,42 @@ my $api_url = 'http://' . $prefs->get('username') . ':' . $prefs->get('password'
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
 
-#sub getStations {
-#	my ($class, $cb) = @_;
-#	_call('/api/channel/grid', $cb);
-#}
-
 sub getStations {
 	my ($class, $cb) = @_;
-
-	getChannelTagUuid(sub {
-		my ($uuid) = @_;
-
-		_call('/api/channel/grid', sub {
-			my ($channels) = @_;
-
-			my $stations = [];
-
-			foreach (@$channels) {
-				my ($channel) = @_;
-				#$log->error('TVH debug: ' . $channel->{name} );
-
-				#$log->error('TVH debug: ' . $channel . ' ' . $channel[0]);
-				#my (@tags) = @channel[0];
-
-				#if (grep( /^$uuid$/, @$channel->{tags})) {
-				#}
-					push $stations, $channel;
-			}
-
-			$cb->($channels);
-		});
-	});
+	_call('/api/channel/grid?limit=500', $cb);
 }
+
+#sub getStationsNotWorking {
+#	my ($class, $cb) = @_;
+#
+#
+#	getChannelTagUuid(sub {
+#		my ($uuid) = @_;
+#		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
+#		_call('/api/channel/grid', sub {
+#			my ($channels) = @_;
+#
+#			my @stations = [];
+#
+#			foreach (@$channels) {
+#				my ($channel) = @_;
+#
+#				my (@tags) = $_->{tags};
+##				
+#				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
+#
+#				if (($tags[0][0] . 'q') ~~ ($uuid . 'q')) {
+#					push @stations, $channel;
+#					$log->error('Added!');
+#				}
+#			}
+#
+#			$cb->({
+#				items => $items,
+#			});
+#		});
+#	});
+#}
 
 sub getChannelTagUuid {
 	my ($cb) = @_;
@@ -67,11 +71,10 @@ sub getChannelTagUuid {
 			
 			if (@$tag[0]->{val} == 'Radio channels') {
 				$uuid = @$tag[0]->{key};
-				$log->error('TVH using tag: ' . @$tag[0]->{key});
 			}
 		}
 	});
-	$log->error('TVH using tag uuid: ' . $uuid);
+	$log->error('TVH using tag uuid: (' . $uuid . ')');
 	$cb->($uuid);
 }
 
