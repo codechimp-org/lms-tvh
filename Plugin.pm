@@ -78,6 +78,12 @@ sub handleFeed {
 		return;
 	}
 
+	# Validate that all settings have values
+	if (!$prefs->get('server')||!$prefs->get('port')||!$prefs->get('username')||!$prefs->get('password')||!$prefs->get('tag')) {
+		$cb->([{ name => cstring($client, 'PLUGIN_TVH_NO_SETTINGS') }]);
+		return;
+	}
+
 	$client = $client->master;
 
 	my $items = [

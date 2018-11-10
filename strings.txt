@@ -4,6 +4,9 @@ PLUGIN_TVH
 PLUGIN_TVH_DESC
 	EN	TVH gives you access to TV Headend Radio Streams
 
+PLUGIN_TVH_NO_SETTINGS
+	EN	No connection settings, use Settings/Advanced/TVH to add your TV Headend details
+
 PLUGIN_TVH_STATIONS
 	EN	Stations
 
