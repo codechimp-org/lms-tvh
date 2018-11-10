@@ -79,12 +79,12 @@ sub handleFeed {
 
 	my $items = [
 		{
-			name => 'bbc 6 Music',
+			name => 'Test BBC 6 Music',
 			type => 'audio',
 			url  => 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/stream/channelnumber/707',
 		}
 		,{
-			name => cstring($client, 'PLUGIN_TVH_VENUES'),
+			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
 			type => 'link',
 			url  => \&stations,
 		}
