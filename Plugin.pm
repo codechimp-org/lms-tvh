@@ -191,14 +191,20 @@ sub _renderStations {
 	my $items = [];
 
 	foreach (@$stations) {
-		push @$items, {
-			name => $_->{name},
-			line1 => $_->{name},
-			line2 => $_->{number},
-			type => 'audio',
-			image => $api_noauth_url . $_->{icon_public_url},
-			url => $api_url . 'stream/channelnumber/' . $_->{number}
+		
+		my (@tags) = $_->{tags};
+			
+		if ($tags[0][0] == '235f7ae1a2f4bfc2f8871f65c18f6685') {
+			push @$items, {
+				name => $_->{name},
+				line1 => $_->{name},
+				line2 => $_->{number},
+				type => 'audio',
+				image => $api_noauth_url . $_->{icon_public_url},
+				url => $api_url . 'stream/channelnumber/' . $_->{number}
+			}
 		}
+
 	}
 
 	return $items;
