@@ -280,7 +280,7 @@ sub _renderRecordings {
 			line2 => $_->{channelname},
 			type => 'audio',
 			image => $api_noauth_url . $_->{icon_public_url},
-			url => $api_url . 'play/' . $_->{url}
+			url => $api_url . $_->{url}
 			}
 	}
 
