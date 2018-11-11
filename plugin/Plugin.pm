@@ -90,7 +90,7 @@ sub handleFeed {
 		{
 			name => 'Test BBC 6 Music',
 			type => 'audio',
-			url  => $api_url . '/stream/channelnumber/707',
+			url  => $api_url . 'stream/channelnumber/707',
 		}
 		,{
 			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
