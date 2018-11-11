@@ -121,7 +121,7 @@ sub tags {
 				name => $_->{val},
 				url => \&taggedstations,
 				passthrough => [{
-					taggedstations => $_->{key}
+					uuid => $_->{key}
 				}],
 			}
 		}
@@ -132,12 +132,12 @@ sub tags {
 
 sub taggedstations {
 	my ($client, $cb, $params, $args) = @_;
-	my $tag = $params->{taggedstations} || $args->{taggedstations};
+	my $tagUuid = $params->{uuid} || $args->{uuid};
 
 	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
-		my $items = _renderStations($stations, $tag);
+		my $items = _renderStations($stations, $tagUuid);
 
 		$cb->({
 			items => $items
