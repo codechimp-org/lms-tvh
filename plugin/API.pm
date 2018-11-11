@@ -78,6 +78,12 @@ sub getChannelTagUuid {
 	$cb->($uuid);
 }
 
+sub getTags {
+	my ($class, $cb) = @_;
+	_call('/api/channeltag/list', $cb);
+}
+
+
 
 sub getEras {
 	my ($class, $cb) = @_;

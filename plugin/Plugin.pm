@@ -96,6 +96,10 @@ sub handleFeed {
 			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
 			type => 'link',
 			url  => \&stations,
+		},{
+			name => cstring($client, 'PLUGIN_TVH_TAGS'),
+			type => 'link',
+			url  => \&tags,
 		}
 	];
 
@@ -103,6 +107,44 @@ sub handleFeed {
 		items => $items,
 	});
 }
+
+sub tags {
+	my ($client, $cb, $params) = @_;
+
+	Plugins::TVH::API->getTags(sub {
+		my ($tags) = @_;
+
+		my $items = [];
+		foreach (@$tags) {
+			my ($tag) = $_;
+			push $items, {
+				name => $_->{val},
+				url => \&taggedstations,
+				passthrough => [{
+					taggedstations => $_->{key}
+				}],
+			}
+		}
+
+		$cb->({ items => $items });
+	});
+}
+
+sub taggedstations {
+	my ($client, $cb, $params, $args) = @_;
+	my $tag = $params->{taggedstations} || $args->{taggedstations};
+
+	Plugins::TVH::API->getStations(sub {
+		my ($stations) = @_;
+
+		my $items = _renderStations($stations, $tag);
+
+		$cb->({
+			items => $items
+		});
+	});
+}
+
 
 sub eras {
 	my ($client, $cb, $params) = @_;
@@ -160,7 +202,7 @@ sub stations {
 	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
-		my $items = _renderStations($stations);
+		my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
 
 		$cb->({
 			items => $items
@@ -186,7 +228,7 @@ sub venues {
 
 
 sub _renderStations {
-	my ($stations) = @_;
+	my ($stations, $tag) = @_;
 
 	my $items = [];
 
@@ -194,7 +236,7 @@ sub _renderStations {
 		
 		my (@tags) = $_->{tags};
 			
-		if ($tags[0][0] == '235f7ae1a2f4bfc2f8871f65c18f6685') {
+		if ($tags[0][0] == $tag) {
 			push @$items, {
 				name => $_->{name},
 				line1 => $_->{name},
