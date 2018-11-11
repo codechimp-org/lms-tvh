@@ -100,6 +100,10 @@ sub handleFeed {
 			name => cstring($client, 'PLUGIN_TVH_TAGS'),
 			type => 'link',
 			url  => \&tags,
+		},{
+			name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
+			type => 'link',
+			url  => \&recordings,
 		}
 	];
 
@@ -145,6 +149,17 @@ sub taggedstations {
 	});
 }
 
+sub recordings {
+	my ($client, $cb, $params) = @_;
+
+	Plugins::TVH::API->getRecordings(sub {
+		my ($recordings) = @_;
+
+		my $items = _renderRecordings($recordings);
+
+		$cb->({ items => $items });
+	});
+}
 
 sub eras {
 	my ($client, $cb, $params) = @_;
@@ -252,6 +267,25 @@ sub _renderStations {
 	return $items;
 }
 
+sub _renderRecordings {
+	my ($recordings) = @_;
+
+	my $items = [];
+
+	foreach (@$recordings) {
+		
+		push @$items, {
+			name => $_->{disp_title},
+			line1 => $_->{disp_title},
+			line2 => $_->{channelname},
+			type => 'audio',
+			image => $api_noauth_url . $_->{icon_public_url},
+			url => $api_url . 'play/' . $_->{url}
+			}
+	}
+
+	return $items;
+}
 
 sub _renderVenues {
 	my ($venues) = @_;

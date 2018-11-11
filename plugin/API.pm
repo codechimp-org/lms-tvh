@@ -83,7 +83,10 @@ sub getTags {
 	_call('/api/channeltag/list', $cb);
 }
 
-
+sub getRecordings {
+	my ($class, $cb) = @_;
+	_call('/api/dvr/entry/grid_finished?limit=500', $cb);
+}
 
 sub getEras {
 	my ($class, $cb) = @_;

@@ -60,3 +60,9 @@ PLUGIN_TVH_TAG
 
 PLUGIN_TVH_TAG_DESC
 	EN	TV Headend Tag for channels to display (Radio channels)
+
+PLUGIN_TVH_RECORDINGS
+	EN	Recordings
+
+PLUGIN_TVH_TAG_DESC
+	EN	TV Headend Recordings
