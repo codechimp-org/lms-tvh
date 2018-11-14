@@ -1,9 +1,7 @@
 # lms-tvh
 TV Headend Radio Plugin for Logitech Media Server
 
-## Instructions
-Create an AAC stream profile within TV Headend and create a user that defaults to that stream
-
+[Installation Instructions](https://github.com/andrew-codechimp/lms-tvh/wiki)
 
 ## Releasing Notes
 Create a sha1 from zip file 
