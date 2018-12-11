@@ -2,14 +2,14 @@
     "deploy": {
         "values": [
             {
-                "name": "squeezePath",
+                "name": "SqueezePath",
                 "type": "static",
                 "platforms": [ "win32" ],
 
                 "value": "C:\\SqueezeTest"
             },
             {
-                "name": "squeezePath",
+                "name": "SqueezePath",
                 "type": "static",
                 "platforms": [ "darwin" ],
 
@@ -18,8 +18,8 @@
         ],
         "packages": [
             {
-                "name": "Plugin",                
-                "description": "Plugin",
+                "name": "PluginLocal",                
+                "description": "Plugin Local",
                 "button": {
                     "text": "Deploy Local",
                 },
@@ -28,11 +28,11 @@
                 ],
                 "deployOnSave": false,
                 "targets": [
-                    "localPluginFolder"
+                    "LocalPluginFolder"
                 ]
             },
             {
-                "name": "Plugin Server",                
+                "name": "PluginServer",                
                 "description": "Plugin Server",
                 "button": {
                     "text": "Deploy Server",
@@ -42,20 +42,20 @@
                 ],
                 "deployOnSave": false,
                 "targets": [
-                    "serverPluginFolder"
+                    "ServerPluginFolder"
                 ]
             }
         ],
 
         "targets": [
             {
-                "name": "localPluginFolder",
+                "name": "LocalPluginFolder",
                 "type": "local",                
                 "description": "Squeeze Server",
-                "dir": "${squeezePath}"
+                "dir": "${SqueezePath}"
             },
             {
-                "name": "serverPluginFolder",
+                "name": "ServerPluginFolder",
                 "type": "local",                
                 "description": "Squeeze Server",
                 "dir": "\\\\server\\path"
