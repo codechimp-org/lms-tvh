@@ -2,19 +2,25 @@
     "deploy": {
         "packages": [
             {
-                "name": "Plugin",
-                "description": "Plugin",
+                "name": "Plugin Mac",                
+                "description": "Plugin Mac",
+                "button": {
+                    "text": "Deploy to Mac",
+                },
                 "files": [
                     "plugin/**"
                 ],
-                "deployOnSave": false
+                "deployOnSave": false,
+                "targets": [
+                    "Mac"
+                ]
             }
         ],
 
         "targets": [
             {
                 "type": "local",
-                "name": "Mac Squeeze Server",
+                "name": "Mac",
                 "description": "Mac Squeeze Server",
                 "dir": "\\My Local Machine Address"
             }
