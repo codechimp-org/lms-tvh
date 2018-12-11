@@ -1,28 +1,64 @@
 {
     "deploy": {
+        "values": [
+            {
+                "name": "squeezePath",
+                "type": "static",
+                "platforms": [ "win32" ],
+
+                "value": "C:\\SqueezeTest"
+            },
+            {
+                "name": "squeezePath",
+                "type": "static",
+                "platforms": [ "darwin" ],
+
+                "value": "<THE PATH TO SQUEEZE ON MAC>"
+            }
+        ],
         "packages": [
             {
-                "name": "Plugin Mac",                
-                "description": "Plugin Mac",
+                "name": "Plugin",                
+                "description": "Plugin",
                 "button": {
-                    "text": "Deploy to Mac",
+                    "text": "Deploy Local",
                 },
                 "files": [
                     "plugin/**"
                 ],
                 "deployOnSave": false,
                 "targets": [
-                    "Mac"
+                    "localPluginFolder"
+                ]
+            },
+            {
+                "name": "Plugin Server",                
+                "description": "Plugin Server",
+                "button": {
+                    "text": "Deploy Server",
+                },
+                "files": [
+                    "plugin/**"
+                ],
+                "deployOnSave": false,
+                "targets": [
+                    "serverPluginFolder"
                 ]
             }
         ],
 
         "targets": [
             {
-                "type": "local",
-                "name": "Mac",
-                "description": "Mac Squeeze Server",
-                "dir": "\\My Local Machine Address"
+                "name": "localPluginFolder",
+                "type": "local",                
+                "description": "Squeeze Server",
+                "dir": "${squeezePath}"
+            },
+            {
+                "name": "serverPluginFolder",
+                "type": "local",                
+                "description": "Squeeze Server",
+                "dir": "\\\\server\\path"
             }
         ]
     }
