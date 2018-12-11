@@ -1,0 +1,23 @@
+{
+    "deploy": {
+        "packages": [
+            {
+                "name": "Plugin",
+                "description": "Plugin",
+                "files": [
+                    "plugin/**"
+                ],
+                "deployOnSave": false
+            }
+        ],
+
+        "targets": [
+            {
+                "type": "local",
+                "name": "Mac Squeeze Server",
+                "description": "Mac Squeeze Server",
+                "dir": "\\My Local Machine Address"
+            }
+        ]
+    }
+}
