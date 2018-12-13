@@ -35,14 +35,14 @@
                 "name": "PluginServer",                
                 "description": "Plugin Server",
                 "button": {
-                    "text": "Deploy Server",
+                    "text": "Deploy Zeus",
                 },
                 "files": [
                     "plugin/**"
                 ],
                 "deployOnSave": false,
                 "targets": [
-                    "ServerPluginFolder"
+                    "ZeusPluginFolder"
                 ]
             }
         ],
@@ -61,10 +61,10 @@
                 ]
             },
             {
-                "name": "ServerPluginFolder",
+                "name": "ZeusPluginFolder",
                 "type": "local",                
                 "description": "Squeeze Server",
-                "dir": "\\\\server\\path",
+                "dir": "/Volumes/appdata/LogitechMediaServer/plugins/TVH/",
                 "mappings": [
                     {
                         "source": "/plugin",
