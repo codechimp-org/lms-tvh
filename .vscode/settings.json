@@ -13,7 +13,7 @@
                 "type": "static",
                 "platforms": [ "darwin" ],
 
-                "value": "<THE PATH TO SQUEEZE ON MAC>"
+                "value": "/Users/andrew/Library/Application Support/Squeezebox/Plugins/TVH/"
             }
         ],
         "packages": [
@@ -52,13 +52,25 @@
                 "name": "LocalPluginFolder",
                 "type": "local",                
                 "description": "Squeeze Server",
-                "dir": "${SqueezePath}"
+                "dir": "${SqueezePath}",
+                "mappings": [
+                    {
+                        "source": "/plugin",
+                        "target": "/"
+                    }
+                ]
             },
             {
                 "name": "ServerPluginFolder",
                 "type": "local",                
                 "description": "Squeeze Server",
-                "dir": "\\\\server\\path"
+                "dir": "\\\\server\\path",
+                "mappings": [
+                    {
+                        "source": "/plugin",
+                        "target": "/"
+                    }
+                ]
             }
         ]
     }
