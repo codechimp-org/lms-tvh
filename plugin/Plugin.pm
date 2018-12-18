@@ -217,6 +217,7 @@ sub stations {
 	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
+		#TODO: Change this to use tag guid based on lookup
 		my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
 
 		$cb->({
