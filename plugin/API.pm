@@ -8,6 +8,7 @@ use JSON::XS::VersionOneAndTwo;
 # use POSIX qw(strftime);
 # use Tie::Cache::LRU::Expires;
 # use URI::Escape qw(uri_escape_utf8);
+use Encode;
 
 use Slim::Networking::SimpleAsyncHTTP;
 use Slim::Utils::Cache;
@@ -296,7 +297,7 @@ sub _call {
 
 				my $response_content = $response->content;
 
-				$result = decode_json($response_content,);
+				$result = decode_json(decode_utf8($response_content),);
 			}
 			else {
 				$log->error("TVHeadend didn't return JSON data? " . $response->content);
