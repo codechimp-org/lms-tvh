@@ -121,37 +121,43 @@ sub getStations {
 	_call('/api/channel/grid?limit=500', $cb);
 }
 
-#sub getStationsNotWorking {
-#	my ($class, $cb) = @_;
-#
-#
-#	getChannelTagUuid(sub {
-#		my ($uuid) = @_;
-#		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
-#		_call('/api/channel/grid', sub {
-#			my ($channels) = @_;
-#
-#			my @stations = [];
-#
-#			foreach (@$channels) {
-#				my ($channel) = @_;
-#
-#				my (@tags) = $_->{tags};
-##				
-#				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
-#
-#				if (($tags[0][0] . 'q') ~~ ($uuid . 'q')) {
-#					push @stations, $channel;
-#					$log->error('Added!');
-#				}
-#			}
-#
-#			$cb->({
-#				items => $items,
-#			});
-#		});
-#	});
-#}
+sub getStationsNotWorking {
+	my ($class, $cb) = @_;
+
+	getChannelTagUuid(sub {
+		my ($uuid) = @_;
+
+		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
+		_call('/api/channel/grid', sub {
+			my ($channels) = @_;
+
+			$log->error('TVH getStations channels is an ' . $channels);
+
+			my $stations = [];
+
+			foreach (@$channels) {
+				my ($channel) = @_;
+
+				my (@tags) = $_->{tags};
+				
+				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
+
+				if ($tags[0][0] == $uuid) {
+					push @$stations, [$channel] ;
+					#{
+					#	name => $channel->{name},
+					#	number => $channel->{number},
+					#	icon_public_url => $channel->{icon_public_url}
+					#};
+					$log->error('Added!');
+				}
+			}
+
+			$log->error('TVH getStations calling back');
+			$cb->($stations);
+		});
+	});
+}
 
 sub getChannelTagUuid {
 	my ($cb) = @_;
@@ -167,9 +173,10 @@ sub getChannelTagUuid {
 				$uuid = @$tag[0]->{key};
 			}
 		}
+
+		$log->error('TVH getChannelTagUuid found uuid: (' . $uuid . ')');
+		$cb->($uuid);
 	});
-	$log->error('TVH using tag uuid: (' . $uuid . ')');
-	$cb->($uuid);
 }
 
 sub getTags {
@@ -182,70 +189,6 @@ sub getRecordings {
 	_call('/api/dvr/entry/grid_finished?limit=500', $cb);
 }
 
-sub getEras {
-	my ($class, $cb) = @_;
-	_call('/eras', $cb);
-}
-
-sub getYear {
-	my ($class, $year, $cb) = @_;
-
-	# ??? - sorting doesn't work?
-	_call("/years/$year", sub {
-		my ($shows) = @_;
-
-		foreach (@$shows) {
-			$cache->set('TVH_show_' . $_->{id}, $_, CACHE_TTL)
-		}
-
-		$cb->($shows);
-	}, {
-		sort_attr => 'date',
-		sort_dir => 'desc'
-	});
-}
-
-sub getVenues {
-	my ($class, $cb) = @_;
-	_call('/venues', $cb, {
-		sort_attr => 'name'
-	});
-}
-
-sub getVenue {
-	my ($class, $id, $cb) = @_;
-	_call("/venues/$id", $cb);
-}
-
-sub getSongs {
-	my ($class, $cb) = @_;
-	_call('/songs', $cb, {
-		sort_attr => 'title'
-	});
-}
-
-sub getSong {
-	my ($class, $id, $cb) = @_;
-	_call("/songs/$id", $cb);
-}
-
-sub getShow {
-	my ($class, $id, $cb) = @_;
-
-	if ( my $cached = $cache->get('TVH_show_' . $id) ) {
-		main::INFOLOG && $log->is_info && $log->info("Returning cached data for show $id");
-		main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
-		$cb->($cached);
-		return;
-	}
-
-	_call("/shows/$id", $cb);
-}
-
-sub search {
-	my ($class, $query, $cb) = @_;
-	_call("/search/$query", $cb);
-}
 
 sub _call {
 	my ( $url, $cb, $params ) = @_;
@@ -285,7 +228,7 @@ sub _call {
 		$log->info("API call: $url");
 	}
 
-	my $http = Slim::Networking::SimpleAsyncHTTP->new(
+my $http = Slim::Networking::SimpleAsyncHTTP->new(
 		sub {
 			my $response = shift;
 			my $params   = $response->params('params');
@@ -294,10 +237,9 @@ sub _call {
 
 			if ( $response->headers->content_type =~ /json/i ) {
 				$log->error('TVH got a response: ' . $response->content);
-
-				my $response_content = $response->content;
-
-				$result = decode_json(decode_utf8($response_content),);
+				$result = decode_json(
+					$response->content,
+				);
 			}
 			else {
 				$log->error("TVHeadend didn't return JSON data? " . $response->content);
