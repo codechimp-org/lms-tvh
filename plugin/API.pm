@@ -22,7 +22,10 @@ use Scalar::Util qw(blessed dualvar isdual readonly refaddr reftype
                         set_prototype);
 
 my $prefs = preferences('plugin.TVH');
-my $api_url = 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
+
+sub getApiUrl {
+	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
+}
 
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
@@ -195,7 +198,7 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = $api_url . $url;
+	$url = getApiUrl(). $url;
 
 	$params->{per_page} ||= 9999;
 

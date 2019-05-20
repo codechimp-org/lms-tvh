@@ -15,8 +15,13 @@ use Plugins::TVH::Settings;
 
 my $prefs = preferences('plugin.TVH');
 
-my $api_url = 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
-my $api_noauth_url = 'http://' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
+sub getApiUrl {
+	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
+}
+
+sub getApiUrlNoAuth {
+	return 'http://' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
+}
 
 use vars qw($VERSION);
 
@@ -90,7 +95,7 @@ sub handleFeed {
 		{
 			name => 'Test BBC 6 Music',
 			type => 'audio',
-			url  => $api_url . 'stream/channelnumber/707',
+			url  => getApiUrl() . 'stream/channelnumber/707',
 		}
 		,{
 			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
@@ -213,8 +218,8 @@ sub _renderStations {
 				line1 => $_->{name},
 				line2 => $_->{number},
 				type => 'audio',
-				image => $api_noauth_url . $_->{icon_public_url},
-				url => $api_url . 'stream/channelnumber/' . $_->{number}
+				image => getApiUrlNoAuth() . $_->{icon_public_url},
+				url => getApiUrl() . 'stream/channelnumber/' . $_->{number}
 			}
 		}
 
@@ -235,8 +240,8 @@ sub _renderRecordings {
 			line1 => $_->{disp_title},
 			line2 => $_->{channelname},
 			type => 'audio',
-			image => $api_noauth_url . $_->{icon_public_url},
-			url => $api_url . $_->{url}
+			image => getApiUrlNoAuth() . $_->{icon_public_url},
+			url => getApiUrl() . $_->{url}
 			}
 	}
 
