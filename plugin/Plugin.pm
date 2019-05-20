@@ -260,7 +260,7 @@ sub _getImage {
 		return "$image";
 	}
 	else {
-		return "noTVHImage.jpg";
+		return "plugins/TVH/html/images/radio-tower.png";
 	}
 
 }
