@@ -12,6 +12,7 @@ use Plugins::TVH::API;
 use Plugins::TVH::Metadata;
 
 use Plugins::TVH::Settings;
+use LWP::Simple;
 
 my $prefs = preferences('plugin.TVH');
 
@@ -249,20 +250,18 @@ sub _renderRecordings {
 	return $items;
 }
 
-#Not working
+#This works, just need an image placeholder
 sub _getImage {
 	my $image = getApiUrlNoAuth() . "$_[0]";
 
-	$log->error('TVH getImage: (' . $image . ')');
+#	$log->error('TVH getImage: (' . $image . ')');
 
-	return "$image";
-	
-#	if (-e "$image") {
-#		return "$image";
-#	}
-#	else {
-#		return "noTVHImage.jpg";
-#	}
+	if (head("$image")) {
+		return "$image";
+	}
+	else {
+		return "noTVHImage.jpg";
+	}
 
 }
 
