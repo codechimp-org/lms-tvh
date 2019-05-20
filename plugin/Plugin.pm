@@ -218,7 +218,8 @@ sub _renderStations {
 				line1 => $_->{name},
 				line2 => $_->{number},
 				type => 'audio',
-				image => getApiUrlNoAuth() . $_->{icon_public_url},
+				#image => getApiUrlNoAuth() . $_->{icon_public_url},  
+				image => _getImage($_->{icon_public_url}),  
 				url => getApiUrl() . 'stream/channelnumber/' . $_->{number}
 			}
 		}
@@ -246,6 +247,23 @@ sub _renderRecordings {
 	}
 
 	return $items;
+}
+
+#Not working
+sub _getImage {
+	my $image = getApiUrlNoAuth() . "$_[0]";
+
+	$log->error('TVH getImage: (' . $image . ')');
+
+	return "$image";
+	
+#	if (-e "$image") {
+#		return "$image";
+#	}
+#	else {
+#		return "noTVHImage.jpg";
+#	}
+
 }
 
 1;
