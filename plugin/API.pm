@@ -23,7 +23,7 @@ use Scalar::Util qw(blessed dualvar isdual readonly refaddr reftype
 
 my $prefs = preferences('plugin.TVH');
 
-sub getApiUrl {
+sub _getApiUrl {
 	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
 }
 
@@ -198,7 +198,7 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = getApiUrl(). $url;
+	$url = _getApiUrl(). $url;
 
 	$params->{per_page} ||= 9999;
 

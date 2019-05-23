@@ -16,11 +16,11 @@ use LWP::Simple;
 
 my $prefs = preferences('plugin.TVH');
 
-sub getApiUrl {
+sub _getApiUrl {
 	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
 }
 
-sub getApiUrlNoAuth {
+sub _getApiUrlNoAuth {
 	return 'http://' . $prefs->get('server') . ':' . $prefs->get('port') . '/';
 }
 
@@ -96,7 +96,7 @@ sub handleFeed {
 		{
 			name => 'Test BBC 6 Music',
 			type => 'audio',
-			url  => getApiUrl() . 'stream/channelnumber/707',
+			url  => _getApiUrl() . 'stream/channelnumber/707',
 		},{
 			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
 			type => 'link',
@@ -221,8 +221,8 @@ sub _renderStations {
 				line2 => $_->{number},
 				type => 'audio',
 				#image => getApiUrlNoAuth() . $_->{icon_public_url},  
-				image => _getImage($_->{icon_public_url}),  
-				url => getApiUrl() . 'stream/channelnumber/' . $_->{number}
+				image => _getStationImage($_->{icon_public_url}),  
+				url => _getApiUrl() . 'stream/channelnumber/' . $_->{number}
 			}
 		}
 
@@ -243,19 +243,16 @@ sub _renderRecordings {
 			line1 => $_->{disp_title},
 			line2 => $_->{channelname},
 			type => 'audio',
-			image => getApiUrlNoAuth() . $_->{icon_public_url},
-			url => getApiUrl() . $_->{url}
+			image => _getApiUrlNoAuth() . $_->{icon_public_url},
+			url => _getApiUrl() . $_->{url}
 			}
 	}
 
 	return $items;
 }
 
-#This works, just need an image placeholder
-sub _getImage {
-	my $image = getApiUrlNoAuth() . "$_[0]";
-
-#	$log->error('TVH getImage: (' . $image . ')');
+sub _getStationImage {
+	my $image = _getApiUrlNoAuth() . "$_[0]";
 
 	if (head("$image")) {
 		return "$image";
