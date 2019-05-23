@@ -97,19 +97,20 @@ sub handleFeed {
 			name => 'Test BBC 6 Music',
 			type => 'audio',
 			url  => getApiUrl() . 'stream/channelnumber/707',
-		}
-		,{
+		},{
 			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
 			type => 'link',
 			url  => \&stations,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_TAGS'),
-			type => 'link',
-			url  => \&tags,
+			image => 'plugins/TVH/html/images/radiotower.png',
 		},{
 			name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
 			type => 'link',
 			url  => \&recordings,
+			image => 'plugins/TVH/html/images/recording.png',
+		},{
+			name => cstring($client, 'PLUGIN_TVH_TAGS'),
+			type => 'link',
+			url  => \&tags,
 		}
 	];
 
@@ -260,7 +261,7 @@ sub _getImage {
 		return "$image";
 	}
 	else {
-		return "plugins/TVH/html/images/radio-tower.png";
+		return "plugins/TVH/html/images/radiotower.png";
 	}
 
 }
