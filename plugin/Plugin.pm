@@ -41,6 +41,12 @@ sub initPlugin {
 
 	Plugins::TVH::Metadata->init();
 
+	# Default the preferences
+	$prefs->init({
+		port => '9981',
+		tag => 'Radio channels',
+	});
+
 	# Slim::Menu::GlobalSearch->registerInfoProvider( tvh => (
 	# 	func => sub {
 	# 		my ( $client, $tags ) = @_;
