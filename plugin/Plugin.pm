@@ -136,7 +136,7 @@ sub tags {
 			my ($tag) = $_;
 			push $items, {
 				name => $_->{val},
-				url => \&taggedstations,
+				url => \&getStationsByTag,
 				passthrough => [{
 					uuid => $_->{key}
 				}],
@@ -144,22 +144,6 @@ sub tags {
 		}
 
 		$cb->({ items => $items });
-	});
-}
-
-sub taggedstations {
-	my ($client, $cb, $params, $args) = @_;
-	my $tagUuid = $params->{uuid} || $args->{uuid};
-	$log->error(Data::Dump::dump($params));
-	$log->error(Data::Dump::dump($args));
-	Plugins::TVH::API->getStations(sub {
-		my ($stations) = @_;
-
-		my $items = _renderStations($stations, $tagUuid);
-
-		$cb->({
-			items => $items
-		});
 	});
 }
 
@@ -178,37 +162,21 @@ sub recordings {
 sub stations {
 	my ($client, $cb, $params, $args) = @_;
 
-	#Plugins::TVH::API->getStations(sub {
-		#my ($stations) = @_;
+	my $u = { uuid => "235f7ae1a2f4bfc2f8871f65c18f6685" }; # Luke
+	# my $u = { uuid => "c981c251f22a82b09fdbc7edc85a338b" }; # Andrew
 
-        
-        #TODO: Change this to use tag guid based on lookup, see NotWorking version
-        
-		# Luke
-		# my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
-
-		# Karpo
-		#my $items = _renderStations($stations, 'c981c251f22a82b09fdbc7edc85a338b');
-		
-		#$cb->({
-		#	items => $items
-		#});
-	#});
-
-	my $u = { uuid => "235f7ae1a2f4bfc2f8871f65c18f6685" };
-	$cb->({ items => taggedstations($client, $cb, $params, $u)});
+	$cb->({ items => getStationsByTag($client, $cb, $params, $u)});
 }
 
-sub stationsNotWorking {
+sub getStationsByTag {
 	my ($client, $cb, $params, $args) = @_;
-
-	Plugins::TVH::API->getStationsNotWorking(sub {
+	my $tagUuid = $params->{uuid} || $args->{uuid};
+	$log->error(Data::Dump::dump($params));
+	$log->error(Data::Dump::dump($args));
+	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
-		$log->error('TVH getStations called back');
-
-
-		my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
+		my $items = _renderStations($stations, $tagUuid);
 
 		$cb->({
 			items => $items
