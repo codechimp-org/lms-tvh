@@ -213,6 +213,8 @@ sub _renderStations {
 	foreach (@$stations) {
 		
 		my (@tags) = $_->{tags};
+
+		$log->error(Data::Dump::dump(@tags));
 			
 		if ($tags[0][0] == $tag) {
 			push @$items, {
@@ -220,7 +222,6 @@ sub _renderStations {
 				line1 => $_->{name},
 				line2 => $_->{number},
 				type => 'audio',
-				#image => getApiUrlNoAuth() . $_->{icon_public_url},  
 				image => _getStationImage($_->{icon_public_url}),  
 				url => _getApiUrl() . 'stream/channelnumber/' . $_->{number}
 			}

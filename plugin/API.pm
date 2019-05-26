@@ -231,7 +231,7 @@ sub _call {
 		$log->info("API call: $url");
 	}
 
-my $http = Slim::Networking::SimpleAsyncHTTP->new(
+	my $http = Slim::Networking::SimpleAsyncHTTP->new(
 		sub {
 			my $response = shift;
 			my $params   = $response->params('params');
