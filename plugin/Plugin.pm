@@ -190,27 +190,27 @@ sub _renderStations {
 	my $items = [];
 
 	$log->error('TVH - tag: ' . $tag);
-	foreach (@$stations) {
-		
-	
-		my (@tags) = $_->{tags};
+	for my $station (@$stations) {
+		my (@tags) = $station->{tags};
 
-		
-		$log->error('TVH assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
+		# $log->error('TVH assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
 
-			
-		if ($tags[0][0] == $tag) {
-			$log->error('TVH - added');
-			push @$items, {
-				name => $_->{name},
-				line1 => $_->{name},
-				line2 => $_->{number},
-				type => 'audio',
-				image => _getStationImage($_->{icon_public_url}),  
-				url => _getApiUrl() . 'stream/channelnumber/' . $_->{number}
+		for my $row (@tags) {
+			for my $element (@$row) {    # <-- dereference the array ref
+				$log->error($element);
+				if ($element eq $tag) {
+
+					push @$items, {
+						name => $station->{name},
+						line1 => $station->{name},
+						line2 => $station->{number},
+						type => 'audio',
+						image => _getStationImage($station->{icon_public_url}),  
+						url => _getApiUrl() . 'stream/channelnumber/' . $station->{number}
+					}
+				}
 			}
 		}
-
 	}
 
 	return $items;
