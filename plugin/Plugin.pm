@@ -1,6 +1,6 @@
 package Plugins::TVH::Plugin;
 
-use strict;
+#use strict;
 
 use base qw(Slim::Plugin::OPMLBased);
 
@@ -150,7 +150,8 @@ sub tags {
 sub taggedstations {
 	my ($client, $cb, $params, $args) = @_;
 	my $tagUuid = $params->{uuid} || $args->{uuid};
-
+	$log->error(Data::Dump::dump($params));
+	$log->error(Data::Dump::dump($args));
 	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
@@ -177,8 +178,9 @@ sub recordings {
 sub stations {
 	my ($client, $cb, $params, $args) = @_;
 
-	Plugins::TVH::API->getStations(sub {
-		my ($stations) = @_;
+	#Plugins::TVH::API->getStations(sub {
+		#my ($stations) = @_;
+
         
         #TODO: Change this to use tag guid based on lookup, see NotWorking version
         
@@ -186,13 +188,15 @@ sub stations {
 		# my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
 
 		# Karpo
-		my $items = _renderStations($stations, 'c981c251f22a82b09fdbc7edc85a338b');
+		#my $items = _renderStations($stations, 'c981c251f22a82b09fdbc7edc85a338b');
 		
+		#$cb->({
+		#	items => $items
+		#});
+	#});
 
-		$cb->({
-			items => $items
-		});
-	});
+	my $u = { uuid => "235f7ae1a2f4bfc2f8871f65c18f6685" };
+	$cb->({ items => taggedstations($client, $cb, $params, $u)});
 }
 
 sub stationsNotWorking {
@@ -202,6 +206,7 @@ sub stationsNotWorking {
 		my ($stations) = @_;
 
 		$log->error('TVH getStations called back');
+
 
 		my $items = _renderStations($stations, '235f7ae1a2f4bfc2f8871f65c18f6685');
 
@@ -216,13 +221,18 @@ sub _renderStations {
 
 	my $items = [];
 
+	$log->error('TVH - tag: ' . $tag);
 	foreach (@$stations) {
 		
+	
 		my (@tags) = $_->{tags};
 
-		$log->error(Data::Dump::dump(@tags));
+		
+		$log->error('TVH assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
+
 			
 		if ($tags[0][0] == $tag) {
+			$log->error('TVH - added');
 			push @$items, {
 				name => $_->{name},
 				line1 => $_->{name},
