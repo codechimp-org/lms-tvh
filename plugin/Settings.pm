@@ -30,8 +30,6 @@ sub handler {
 		$prefs->set('username', "$username");		
 		my $password = $params->{'password'};
 		$prefs->set('password', "$password");
-		my $tag = $params->{'tag'};
-		$prefs->set('tag', "$tag");	
 	}				
 	
 	# LOAD
@@ -39,7 +37,6 @@ sub handler {
 	$params->{'prefs'}->{'port'} = $prefs->get('port');
 	$params->{'prefs'}->{'username'} = $prefs->get('username');
 	$params->{'prefs'}->{'password'} = $prefs->get('password');
-	$params->{'prefs'}->{'tag'} = $prefs->get('tag');
 	
 	return $class->SUPER::handler($client, $params);
 }

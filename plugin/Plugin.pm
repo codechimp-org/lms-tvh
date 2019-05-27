@@ -14,6 +14,8 @@ use Plugins::TVH::Metadata;
 use Plugins::TVH::Settings;
 use LWP::Simple;
 
+use Data::Dumper;
+
 my $prefs = preferences('plugin.TVH');
 
 sub _getApiUrl {
@@ -44,7 +46,6 @@ sub initPlugin {
 	# Default the preferences
 	$prefs->init({
 		port => '9981',
-		tag => 'Radio channels',
 	});
 
 	# Slim::Menu::GlobalSearch->registerInfoProvider( tvh => (
@@ -91,7 +92,7 @@ sub handleFeed {
 	}
 
 	# Validate that all settings have values
-	if (!$prefs->get('server')||!$prefs->get('port')||!$prefs->get('username')||!$prefs->get('password')||!$prefs->get('tag')) {
+	if (!$prefs->get('server')||!$prefs->get('port')||!$prefs->get('username')||!$prefs->get('password')) {
 		$cb->([{ name => cstring($client, 'PLUGIN_TVH_NO_SETTINGS') }]);
 		return;
 	}
@@ -100,23 +101,15 @@ sub handleFeed {
 
 	my $items = [
 		{
-			name => 'Test BBC 6 Music',
-			type => 'audio',
-			url  => _getApiUrl() . 'stream/channelnumber/707',
-		},{
-			name => cstring($client, 'PLUGIN_TVH_STATIONS'),
+			name => cstring($client, 'PLUGIN_TVH_TAGS'),
 			type => 'link',
-			url  => \&stations,
+			url  => \&tags,
 			image => 'plugins/TVH/html/images/radiotower.png',
 		},{
 			name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
 			type => 'link',
 			url  => \&recordings,
 			image => 'plugins/TVH/html/images/recording.png',
-		},{
-			name => cstring($client, 'PLUGIN_TVH_TAGS'),
-			type => 'link',
-			url  => \&tags,
 		}
 	];
 
@@ -134,7 +127,7 @@ sub tags {
 		my $items = [];
 		foreach (@$tags) {
 			my ($tag) = $_;
-			push $items, {
+			push @$items, {
 				name => $_->{val},
 				url => \&getStationsByTag,
 				passthrough => [{
@@ -142,6 +135,8 @@ sub tags {
 				}],
 			}
 		}
+
+		@$items = sort {$a->{name} cmp $b->{name}} @$items;
 
 		$cb->({ items => $items });
 	});
@@ -159,15 +154,6 @@ sub recordings {
 	});
 }
 
-sub stations {
-	my ($client, $cb, $params, $args) = @_;
-
-	my $u = { uuid => "235f7ae1a2f4bfc2f8871f65c18f6685" }; # Luke
-	# my $u = { uuid => "c981c251f22a82b09fdbc7edc85a338b" }; # Andrew
-
-	$cb->({ items => getStationsByTag($client, $cb, $params, $u)});
-}
-
 sub getStationsByTag {
 	my ($client, $cb, $params, $args) = @_;
 	my $tagUuid = $params->{uuid} || $args->{uuid};
@@ -177,6 +163,8 @@ sub getStationsByTag {
 		my ($stations) = @_;
 
 		my $items = _renderStations($stations, $tagUuid);
+
+		@$items = sort {$a->{name} cmp $b->{name}} @$items;
 
 		$cb->({
 			items => $items
@@ -189,15 +177,16 @@ sub _renderStations {
 
 	my $items = [];
 
-	$log->error('TVH - tag: ' . $tag);
+	# $log->error('TVH - tag: ' . $tag);
+
 	for my $station (@$stations) {
 		my (@tags) = $station->{tags};
 
 		# $log->error('TVH assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
 
 		for my $row (@tags) {
-			for my $element (@$row) {    # <-- dereference the array ref
-				$log->error($element);
+			for my $element (@$row) { 
+				# $log->error($element);
 				if ($element eq $tag) {
 
 					push @$items, {
