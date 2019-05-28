@@ -2,10 +2,10 @@ PLUGIN_TVH
 	EN	TVH
 
 PLUGIN_TVH_DESC
-	EN	TVH gives you access to TV Headend Radio Streams
+	EN	TVH gives you access to TVHeadend Radio Streams
 
 PLUGIN_TVH_NO_SETTINGS
-	EN	No connection settings, use Settings/Advanced/TVH to add your TV Headend details
+	EN	No connection settings, use Settings/Advanced/TVH to add your TVHeadend details
 
 PLUGIN_TVH_INSTRUCTIONS
 	EN	Instructions
@@ -26,25 +26,25 @@ PLUGIN_TVH_PORT
 	EN	Port
 
 PLUGIN_TVH_PORT_DESC
-	EN	TV Headend Port (9981)
+	EN	TVHeadend Port (9981)
 
 PLUGIN_TVH_USERNAME
 	EN	Username
 
 PLUGIN_TVH_USERNAME_DESC
-	EN	TV Headend Username (optional)
+	EN	TVHeadend Username (optional)
 
 PLUGIN_TVH_PASSWORD
 	EN	Password
 
 PLUGIN_TVH_PASSWORD_DESC
-	EN	TV Headend Password (optional)
+	EN	TVHeadend Password (optional)
 
 PLUGIN_TVH_PROFILE
 	EN	Profile
 
 PLUGIN_TVH_PROFILE_DESC
-	EN	TV Headend profile to use (optional if username is set and has a default profile suitable for LMS streaming)
+	EN	TVHeadend profile to use (optional if username is set and has a default profile suitable for LMS streaming)
 
 PLUGIN_TVH_RECORDINGS
 	EN	Recordings
