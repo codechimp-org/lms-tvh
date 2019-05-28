@@ -46,6 +46,7 @@ sub initPlugin {
 	# Default the preferences
 	$prefs->init({
 		port => '9981',
+		stationsorting => 'NAME',
 	});
 
 	# Slim::Menu::GlobalSearch->registerInfoProvider( tvh => (
