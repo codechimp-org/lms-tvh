@@ -101,12 +101,10 @@ sub handleFeed {
 			name => cstring($client, 'PLUGIN_TVH_TAGS'),
 			type => 'link',
 			url  => \&tags,
-			image => 'plugins/TVH/html/images/radiotower.png',
 		},{
 			name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
 			type => 'link',
 			url  => \&recordings,
-			image => 'plugins/TVH/html/images/recording.png',
 		}
 	];
 
@@ -234,7 +232,7 @@ sub _getStationImage {
 		return "$image";
 	}
 	else {
-		return "plugins/TVH/html/images/radiotower.png";
+		return "plugins/TVH/html/images/radio.png";
 	}
 
 }
