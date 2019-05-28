@@ -15,6 +15,8 @@ use Slim::Utils::Cache;
 use Slim::Utils::Log;
 use Slim::Utils::Prefs;
 
+use Plugins::TVH::Prefs;
+
 use constant CACHE_TTL => 3600;
 
 use Scalar::Util qw(blessed dualvar isdual readonly refaddr reftype
@@ -23,9 +25,6 @@ use Scalar::Util qw(blessed dualvar isdual readonly refaddr reftype
 
 my $prefs = preferences('plugin.TVH');
 
-sub _getApiUrl {
-	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
-}
 
 my $log = logger('plugin.TVH');
 my $cache = Slim::Utils::Cache->new();
@@ -198,7 +197,7 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = _getApiUrl(). $url;
+	$url = getApiUrl(). $url;
 
 	$params->{per_page} ||= 9999;
 
