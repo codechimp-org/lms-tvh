@@ -67,30 +67,22 @@ sub handleFeed {
 
 	$client = $client->master;
 
-	my $items = [
-		{
-			name => cstring($client, 'PLUGIN_TVH_TAGS'),
-			type => 'link',
-			url  => \&tags,
-		},{
-			name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
-			type => 'link',
-			url  => \&recordings,
-		}
-	];
+	# my $items = [
+	# 	{
+	# 		name => cstring($client, 'PLUGIN_TVH_TAGS'),
+	# 		type => 'link',
+	# 		url  => \&tags,
+	# 	},{
+	# 		name => cstring($client, 'PLUGIN_TVH_RECORDINGS'),
+	# 		type => 'link',
+	# 		url  => \&recordings,
+	# 	}
+	# ];
 
-	$cb->({
-		items => $items,
-	});
-}
-
-sub tags {
-	my ($client, $cb, $params) = @_;
-
+	my $items = [];
 	Plugins::TVH::API->getTags(sub {
 		my ($tags) = @_;
 
-		my $items = [];
 		foreach (@$tags) {
 			my ($tag) = $_;
 			push @$items, {
@@ -103,22 +95,48 @@ sub tags {
 		}
 
 		@$items = sort {$a->{name} cmp $b->{name}} @$items;
+	});
 
-		$cb->({ items => $items });
+	$cb->({
+		items => $items,
 	});
 }
 
-sub recordings {
-	my ($client, $cb, $params) = @_;
+# sub tags {
+# 	my ($client, $cb, $params) = @_;
+#
+# 	Plugins::TVH::API->getTags(sub {
+# 		my ($tags) = @_;
+#
+# 		my $items = [];
+# 		foreach (@$tags) {
+# 			my ($tag) = $_;
+# 			push @$items, {
+# 				name => $_->{val},
+# 				url => \&getStationsByTag,
+# 				passthrough => [{
+# 					uuid => $_->{key}
+# 				}],
+# 			}
+# 		}
+#
+# 		@$items = sort {$a->{name} cmp $b->{name}} @$items;
+#
+# 		$cb->({ items => $items });
+# 	});
+# }
 
-	Plugins::TVH::API->getRecordings(sub {
-		my ($recordings) = @_;
-
-		my $items = _renderRecordings($recordings);
-
-		$cb->({ items => $items });
-	});
-}
+# sub recordings {
+# 	my ($client, $cb, $params) = @_;
+#
+# 	Plugins::TVH::API->getRecordings(sub {
+# 		my ($recordings) = @_;
+#
+# 		my $items = _renderRecordings($recordings);
+#
+# 		$cb->({ items => $items });
+# 	});
+# }
 
 sub getStationsByTag {
 	my ($client, $cb, $params, $args) = @_;
@@ -169,25 +187,25 @@ sub _renderStations {
 	return $items;
 }
 
-sub _renderRecordings {
-	my ($recordings) = @_;
-
-	my $items = [];
-
-	foreach (@$recordings) {
-		
-		push @$items, {
-			name => $_->{disp_title},
-			line1 => $_->{disp_title},
-			line2 => $_->{channelname},
-			type => 'audio',
-			image => Plugins::TVH::Prefs::getApiUrlNoAuth() . $_->{icon_public_url},
-			url => Plugins::TVH::Prefs::getApiUrl() . $_->{url}
-			}
-	}
-
-	return $items;
-}
+# sub _renderRecordings {
+# 	my ($recordings) = @_;
+#
+# 	my $items = [];
+#
+# 	foreach (@$recordings) {
+#		
+# 		push @$items, {
+# 			name => $_->{disp_title},
+# 			line1 => $_->{disp_title},
+# 			line2 => $_->{channelname},
+# 			type => 'audio',
+# 			image => Plugins::TVH::Prefs::getApiUrlNoAuth() . $_->{icon_public_url},
+# 			url => Plugins::TVH::Prefs::getApiUrl() . $_->{url}
+# 			}
+# 	}
+#
+# 	return $items;
+# }
 
 sub _getStationImage {
 	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$_[0]";
