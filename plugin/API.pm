@@ -123,64 +123,6 @@ sub getStations {
 	_call('/api/channel/grid?limit=500', $cb);
 }
 
-# sub getStationsNotWorking {
-# 	my ($class, $cb) = @_;
-
-# 	getChannelTagUuid(sub {
-# 		my ($uuid) = @_;
-
-# 		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
-# 		_call('/api/channel/grid', sub {
-# 			my ($channels) = @_;
-
-# 			$log->error('TVH getStations channels is an ' . $channels);
-
-# 			my $stations = [];
-
-# 			foreach (@$channels) {
-# 				my ($channel) = @_;
-
-# 				my (@tags) = $_->{tags};
-				
-# 				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
-
-# 				if ($tags[0][0] == $uuid) {
-# 					push @$stations, [$channel] ;
-# 					#{
-# 					#	name => $channel->{name},
-# 					#	number => $channel->{number},
-# 					#	icon_public_url => $channel->{icon_public_url}
-# 					#};
-# 					$log->error('Added!');
-# 				}
-# 			}
-
-# 			$log->error('TVH getStations calling back');
-# 			$cb->($stations);
-# 		});
-# 	});
-# }
-
-# sub getChannelTagUuid {
-# 	my ($cb) = @_;
-
-# 	my $uuid = '';
-# 	_call('/api/channeltag/list', sub {
-# 		my ($tags) = @_;
-
-# 		foreach (@$tags) {
-# 			my ($tag) = @_;
-			
-# 			if (@$tag[0]->{val} == 'Radio channels') {
-# 				$uuid = @$tag[0]->{key};
-# 			}
-# 		}
-
-# 		$log->error('TVH getChannelTagUuid found uuid: (' . $uuid . ')');
-# 		$cb->($uuid);
-# 	});
-# }
-
 sub getTags {
 	my ($class, $cb) = @_;
 	_call('/api/channeltag/list', $cb);
