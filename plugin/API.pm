@@ -124,63 +124,63 @@ sub getStations {
 	_call('/api/channel/grid?limit=500', $cb);
 }
 
-sub getStationsNotWorking {
-	my ($class, $cb) = @_;
+# sub getStationsNotWorking {
+# 	my ($class, $cb) = @_;
 
-	getChannelTagUuid(sub {
-		my ($uuid) = @_;
+# 	getChannelTagUuid(sub {
+# 		my ($uuid) = @_;
 
-		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
-		_call('/api/channel/grid', sub {
-			my ($channels) = @_;
+# 		$log->error('TVH getStations using tag uuid: (' . $uuid . ')');
+# 		_call('/api/channel/grid', sub {
+# 			my ($channels) = @_;
 
-			$log->error('TVH getStations channels is an ' . $channels);
+# 			$log->error('TVH getStations channels is an ' . $channels);
 
-			my $stations = [];
+# 			my $stations = [];
 
-			foreach (@$channels) {
-				my ($channel) = @_;
+# 			foreach (@$channels) {
+# 				my ($channel) = @_;
 
-				my (@tags) = $_->{tags};
+# 				my (@tags) = $_->{tags};
 				
-				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
+# 				$log->error('TVH getStations assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
 
-				if ($tags[0][0] == $uuid) {
-					push @$stations, [$channel] ;
-					#{
-					#	name => $channel->{name},
-					#	number => $channel->{number},
-					#	icon_public_url => $channel->{icon_public_url}
-					#};
-					$log->error('Added!');
-				}
-			}
+# 				if ($tags[0][0] == $uuid) {
+# 					push @$stations, [$channel] ;
+# 					#{
+# 					#	name => $channel->{name},
+# 					#	number => $channel->{number},
+# 					#	icon_public_url => $channel->{icon_public_url}
+# 					#};
+# 					$log->error('Added!');
+# 				}
+# 			}
 
-			$log->error('TVH getStations calling back');
-			$cb->($stations);
-		});
-	});
-}
+# 			$log->error('TVH getStations calling back');
+# 			$cb->($stations);
+# 		});
+# 	});
+# }
 
-sub getChannelTagUuid {
-	my ($cb) = @_;
+# sub getChannelTagUuid {
+# 	my ($cb) = @_;
 
-	my $uuid = '';
-	_call('/api/channeltag/list', sub {
-		my ($tags) = @_;
+# 	my $uuid = '';
+# 	_call('/api/channeltag/list', sub {
+# 		my ($tags) = @_;
 
-		foreach (@$tags) {
-			my ($tag) = @_;
+# 		foreach (@$tags) {
+# 			my ($tag) = @_;
 			
-			if (@$tag[0]->{val} == 'Radio channels') {
-				$uuid = @$tag[0]->{key};
-			}
-		}
+# 			if (@$tag[0]->{val} == 'Radio channels') {
+# 				$uuid = @$tag[0]->{key};
+# 			}
+# 		}
 
-		$log->error('TVH getChannelTagUuid found uuid: (' . $uuid . ')');
-		$cb->($uuid);
-	});
-}
+# 		$log->error('TVH getChannelTagUuid found uuid: (' . $uuid . ')');
+# 		$cb->($uuid);
+# 	});
+# }
 
 sub getTags {
 	my ($class, $cb) = @_;
@@ -228,7 +228,7 @@ sub _call {
 		return;
 	}
 	elsif ( main::INFOLOG && $log->is_info ) {
-		$log->info("API call: $url");
+		$log->debug("API call: $url");
 	}
 
 	my $http = Slim::Networking::SimpleAsyncHTTP->new(
@@ -239,7 +239,7 @@ sub _call {
 			my $result;
 
 			if ( $response->headers->content_type =~ /json/i ) {
-				$log->error('TVH got a response: ' . $response->content);
+				$log->info('TVH got a response: ' . $response->content);
 				$result = decode_json(
 					$response->content,
 				);

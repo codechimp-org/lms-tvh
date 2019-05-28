@@ -152,8 +152,7 @@ sub recordings {
 sub getStationsByTag {
 	my ($client, $cb, $params, $args) = @_;
 	my $tagUuid = $params->{uuid} || $args->{uuid};
-	$log->error(Data::Dump::dump($params));
-	$log->error(Data::Dump::dump($args));
+
 	Plugins::TVH::API->getStations(sub {
 		my ($stations) = @_;
 
@@ -177,18 +176,12 @@ sub _renderStations {
 
 	my $items = [];
 
-	# $log->error('TVH - tag: ' . $tag);
-
 	for my $station (@$stations) {
 		my (@tags) = $station->{tags};
 
-		# $log->error('TVH assessing channel: ' . $_->{name} . ' (' . $tags[0][0] . ')' );
-
 		for my $row (@tags) {
 			for my $element (@$row) { 
-				# $log->error($element);
 				if ($element eq $tag) {
-
 					push @$items, {
 						name => $station->{name},
 						line1 => $station->{name},
