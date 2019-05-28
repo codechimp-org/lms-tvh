@@ -12,7 +12,7 @@ sub getApiUrl {
 	my $username = $prefs->get('username');
 	my $password = $prefs->get('password');
 
-	if ($str =~ /^ *$/) {
+	if ($username =~ /^ *$/) {
 		return 'http://' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
 	}
 	else {
@@ -27,7 +27,7 @@ sub getApiUrlNoAuth {
 sub getProfile {
 	my $profile = $prefs->get('profile');
 
-	if (!$str =~ /^ *$/) {
+	if (!$profile =~ /^ *$/) {
 		return '?profile=' . $profile
 	}
 	else {
