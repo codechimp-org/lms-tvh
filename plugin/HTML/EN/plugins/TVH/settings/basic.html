@@ -20,6 +20,16 @@
 		<input type="password" class="stdedit" name="password" id="password" value="[% prefs.password %]" size="40">
 	[% END %]
 
+	[% WRAPPER setting title="PLUGIN_TVH_STATION_SORTING" desc="PLUGIN_TVH_STATION_SORTING_DESC" %]
+	<div>
+		<select class="stdedit" name="pref_stationsorting" id="stationsorting">
+		  [% FOREACH option = stationsortingopts %]
+		  <option value=[% option.stationsorting %] [% IF prefs.pref_stationsorting == option.stationsorting; "selected"; END %]>[% option.stationsortingtext %]</option>
+		  [% END %]
+		</select>
+	</div>
+[% END %]
+
 	[% WRAPPER setting title="PLUGIN_TVH_INSTRUCTIONS" desc="" %]
 		<div class="tvh-instructions">
 			<ol class="tvh">
