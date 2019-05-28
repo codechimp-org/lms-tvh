@@ -1,5 +1,7 @@
 package Plugins::TVH::Prefs;
 
+my $LEVEL = 1;
+
 use Slim::Utils::Strings qw(string cstring);
 use Slim::Utils::Log;
 use Slim::Utils::Prefs;

@@ -2,6 +2,7 @@ package Plugins::TVH::Settings;
 
 use strict;
 use base qw(Slim::Web::Settings);
+use Slim::Utils::Strings qw(string);
 use Slim::Utils::Prefs;
 
 my $prefs = preferences('plugin.TVH');
@@ -23,8 +24,8 @@ sub beforeRender {
 	my $class = shift;
 	my $params= shift;
 
-	my @prefstationsortingOpts  =({ stationsorting  =>   'NAME',  stationsortingtext  => cstring($client, 'PLUGIN_TVH_STATION_SORTING_NAME')},				
-								{ stationsorting  =>   'NUMBER',  stationsortingtext =>  cstring($client, 'PLUGIN_TVH_STATION_SORTING_NUMBER')});
+	my @prefstationsortingOpts  =({ stationsorting  =>   'NAME',  stationsortingtext  => string('PLUGIN_TVH_STATION_SORTING_NAME')},				
+								{ stationsorting  =>   'NUMBER',  stationsortingtext =>  string('PLUGIN_TVH_STATION_SORTING_NUMBER')});
 
 	$params->{'stationsortingopts'}  = \@prefstationsortingOpts;
 }

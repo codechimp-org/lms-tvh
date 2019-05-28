@@ -159,7 +159,7 @@ sub _renderStations {
 						line2 => $station->{number},
 						type => 'audio',
 						image => _getStationImage($station->{icon_public_url}),  
-						url => getApiUrl() . 'stream/channelnumber/' . $station->{number} . getProfile()
+						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()
 					}
 				}
 			}
@@ -181,8 +181,8 @@ sub _renderRecordings {
 			line1 => $_->{disp_title},
 			line2 => $_->{channelname},
 			type => 'audio',
-			image => getApiUrlNoAuth() . $_->{icon_public_url},
-			url => getApiUrl() . $_->{url}
+			image => Plugins::TVH::Prefs::getApiUrlNoAuth() . $_->{icon_public_url},
+			url => Plugins::TVH::Prefs::getApiUrl() . $_->{url}
 			}
 	}
 
@@ -190,7 +190,7 @@ sub _renderRecordings {
 }
 
 sub _getStationImage {
-	my $image = getApiUrlNoAuth() . "$_[0]";
+	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$_[0]";
 
 	if (head("$image")) {
 		return "$image";

@@ -139,7 +139,7 @@ sub _call {
 
 	# $uri must not have a leading slash
 	$url =~ s/^\///;
-	$url = getApiUrl(). $url;
+	$url = Plugins::TVH::Prefs::getApiUrl(). $url;
 
 	$params->{per_page} ||= 9999;
 
