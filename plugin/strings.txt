@@ -44,7 +44,7 @@ PLUGIN_TVH_PROFILE
 	EN	Profile
 
 PLUGIN_TVH_PROFILE_DESC
-	EN	TV Headend profile to use
+	EN	TV Headend profile to use (optional if username is set and has a default profile suitable for LMS streaming)
 
 PLUGIN_TVH_RECORDINGS
 	EN	Recordings
