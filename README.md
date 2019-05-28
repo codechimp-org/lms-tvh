@@ -5,11 +5,11 @@ lms-tvh is a plugin for Logitech Media Server to allow integration with TVHeaden
 
 
 ## TVHeadend Configuration
-To stream audio to Logitech Media Server a specific audio profile must be created and set as the default for a user account that this plugin will connect with.
+To stream audio to Logitech Media Server a specific audio profile must be created.
 
 First setup a new profile
 
-Create a new user specifically for this plugin.
+Optionally, if using TVHeadend security create a new user specifically for this plugin and set the default profile to be the one you just created above.
 
 ## Plugin Installation
 Go to the Logitech Media Server Settings page. On the Plugins tab insert the repository URL for this plugin at the bottom of the page.
@@ -21,9 +21,10 @@ Save and restart the Logitech Media Server.
 ## Logitech Media Server Configuration & Use
 On the Logitech Media Server Settings page/Advanced tab choose TVH in the top left drop down.
 
-Provide your TVHeadend server details and save.
+Provide your TVHeadend server details, username and password if using security and the profile name if not the default profile for the user or you are not using security.  
+Save your settings
 
-Within the Logitech Media Server home page you will now have TVH under AddOns where you can browse your TV Headend Tags/Stations.
+Within the Logitech Media Server home page you will now have TVH under AddOns where you can browse your TVHeadend Tags/Stations.
 Stream and enjoy :)
 
 ## Disclaimer
