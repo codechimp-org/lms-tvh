@@ -163,7 +163,7 @@ sub getStationsByTag {
 			@$items = sort {$a->{name} cmp $b->{name}} @$items;
 		}
 		else {
-			@$items = sort {$a->{number} <=> $b->{number}} @$items;
+			@$items = sort {$a->{line2} <=> $b->{line2}} @$items;
 		}
 
 		$cb->({
