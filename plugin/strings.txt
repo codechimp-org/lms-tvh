@@ -32,19 +32,19 @@ PLUGIN_TVH_USERNAME
 	EN	Username
 
 PLUGIN_TVH_USERNAME_DESC
-	EN	TV Headend Username for audio stream profile
+	EN	TV Headend Username (optional)
 
 PLUGIN_TVH_PASSWORD
 	EN	Password
 
 PLUGIN_TVH_PASSWORD_DESC
-	EN	TV Headend Password for audio stream user
+	EN	TV Headend Password (optional)
 
-PLUGIN_TVH_TAG
-	EN	Tag
+PLUGIN_TVH_PROFILE
+	EN	Profile
 
-PLUGIN_TVH_TAG_DESC
-	EN	TV Headend Tag for channels to display (Radio channels)
+PLUGIN_TVH_PROFILE_DESC
+	EN	TV Headend profile to use
 
 PLUGIN_TVH_RECORDINGS
 	EN	Recordings

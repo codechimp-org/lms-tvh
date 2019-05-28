@@ -7,7 +7,7 @@ use Slim::Utils::Prefs;
 my $prefs = preferences('plugin.TVH');
 
 sub prefs {
-	my @prefs = qw(server port username password tag, stationsorting);
+	my @prefs = qw(server port username password profile stationsorting);
 	return ($prefs, @prefs);
 }
 
@@ -40,6 +40,8 @@ sub handler {
 		$prefs->set('username', "$username");		
 		my $password = $params->{'password'};
 		$prefs->set('password', "$password");
+		my $profile = $params->{'profile'};
+		$prefs->set('profile', "$profile");
 		my $stationsorting = $params->{'stationsorting'};
 		$prefs->set('stationsorting', "$stationsorting");
 	}				
@@ -49,6 +51,7 @@ sub handler {
 	$params->{'prefs'}->{'port'} = $prefs->get('port');
 	$params->{'prefs'}->{'username'} = $prefs->get('username');
 	$params->{'prefs'}->{'password'} = $prefs->get('password');
+	$params->{'prefs'}->{'profile'} = $prefs->get('profile');
 	$params->{'prefs'}->{'stationsorting'} = $prefs->get('stationsorting');
 	
 	return $class->SUPER::handler($client, $params);

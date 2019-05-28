@@ -19,7 +19,26 @@ use Data::Dumper;
 my $prefs = preferences('plugin.TVH');
 
 sub _getApiUrl {
-	return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
+	my $username = $prefs->get('username');
+	my $password = $prefs->get('password');
+
+	if ($str =~ /^ *$/) {
+		return 'http://' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
+	}
+	else {
+		return 'http://' . $prefs->get('username') . ':' . $prefs->get('password') . '@' . $prefs->get('server') . ':' . $prefs->get('port') . '/';	
+	}	
+}
+
+sub _getProfile {
+	my $profile = $prefs->get('profile');
+
+	if (!$str =~ /^ *$/) {
+		return '?profile=' . $profile
+	}
+	else {
+		return ""
+	}
 }
 
 sub _getApiUrlNoAuth {
@@ -49,29 +68,6 @@ sub initPlugin {
 		stationsorting => 'NAME',
 	});
 
-	# Slim::Menu::GlobalSearch->registerInfoProvider( tvh => (
-	# 	func => sub {
-	# 		my ( $client, $tags ) = @_;
-
-	# 		my $searchParam = $tags->{search};
-	# 		my $passthrough = [{ q => $searchParam }];
-
-	# 		return {
-	# 			name => cstring($client, 'PLUGIN_TVH'),
-	# 			type => 'link',
-	# 			# need to return a list of search items - might be a bug in GlobalSearch?
-	# 			items => [{
-	# 				url => sub {
-	# 					warn Data::Dump::dump($_[1]);
-	# 					search(@_);
-	# 				},
-	# 				passthrough => $passthrough,
-	# 				searchParam => $searchParam,
-	# 			}]
-	# 		};
-	# 	}
-	# ) );
-
 	$class->SUPER::initPlugin(
 		feed   => \&handleFeed,
 		tag    => 'TVH',
@@ -93,7 +89,7 @@ sub handleFeed {
 	}
 
 	# Validate that all settings have values
-	if (!$prefs->get('server')||!$prefs->get('port')||!$prefs->get('username')||!$prefs->get('password')) {
+	if (!$prefs->get('server')||!$prefs->get('port')) {
 		$cb->([{ name => cstring($client, 'PLUGIN_TVH_NO_SETTINGS') }]);
 		return;
 	}
@@ -201,7 +197,7 @@ sub _renderStations {
 						line2 => $station->{number},
 						type => 'audio',
 						image => _getStationImage($station->{icon_public_url}),  
-						url => _getApiUrl() . 'stream/channelnumber/' . $station->{number}
+						url => _getApiUrl() . 'stream/channelnumber/' . $station->{number} . _getProfile()
 					}
 				}
 			}
