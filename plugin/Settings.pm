@@ -23,8 +23,8 @@ sub beforeRender {
 	my $class = shift;
 	my $params= shift;
 
-	my @prefstationsortingOpts  =({ stationsorting  =>   cstring($client, 'PLUGIN_TVH_STATION_SORTING_NAME'),  stationsortingtext  => cstring($client, 'PLUGIN_TVH_STATION_SORTING_NAME')},				
-								{ stationsorting  =>   cstring($client, 'PLUGIN_TVH_STATION_SORTING_NUMBER'),  stationsortingtext =>  cstring($client, 'PLUGIN_TVH_STATION_SORTING_NUMBER')});
+	my @prefstationsortingOpts  =({ stationsorting  =>   'NAME',  stationsortingtext  => cstring($client, 'PLUGIN_TVH_STATION_SORTING_NAME')},				
+								{ stationsorting  =>   'NUMBER',  stationsortingtext =>  cstring($client, 'PLUGIN_TVH_STATION_SORTING_NUMBER')});
 
 	$params->{'stationsortingopts'}  = \@prefstationsortingOpts;
 }

@@ -164,7 +164,12 @@ sub getStationsByTag {
 
 		my $items = _renderStations($stations, $tagUuid);
 
-		@$items = sort {$a->{name} cmp $b->{name}} @$items;
+		if ($prefs->get('stationsorting') eq 'NAME') {
+			@$items = sort {$a->{name} cmp $b->{name}} @$items;
+		}
+		else {
+			@$items = sort {$a->{number} <=> $b->{number}} @$items;
+		}
 
 		$cb->({
 			items => $items
