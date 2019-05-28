@@ -9,7 +9,6 @@ use Slim::Utils::Log;
 use Slim::Utils::Prefs;
 
 use Plugins::TVH::API;
-use Plugins::TVH::Metadata;
 use Plugins::TVH::Settings;
 use Plugins::TVH::Prefs;
 
@@ -33,8 +32,6 @@ sub initPlugin {
 	Plugins::TVH::Settings->new;
 
 	$VERSION = $class->_pluginDataFor('version');
-
-	# Plugins::TVH::Metadata->init();
 
 	# Default the preferences
 	$prefs->init({
