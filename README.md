@@ -1,6 +1,4 @@
 # lms-tvh
-TVHeadend Radio Plugin for Logitech Media Server
-
 lms-tvh is a plugin for Logitech Media Server to allow integration with TVHeadend to play live radio streams from TVHeadend.
 
 ![alt text](https://github.com/andrew-codechimp/lms-tvh/raw/master/lms-tvh-systemdiagram.png "System Diagram")
