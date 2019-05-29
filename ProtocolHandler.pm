@@ -7,6 +7,8 @@ use Slim::Utils::Cache;
 use Slim::Utils::Log;
 use Slim::Utils::Misc;
 
+use Plugins::TVH::Prefs;
+
 my $log = logger('plugin.TVH');
 
 sub new {
@@ -85,7 +87,7 @@ sub getMetadataFor {
 
 	my $cache = Slim::Utils::Cache->new;
 
-        my $meta  = $cache->get( $url );
+    my $meta  = $cache->get( $url );
 
 
 	return {
@@ -105,4 +107,21 @@ sub getMetadataFor {
 
 sub shouldLoop { 0 }
 
+sub getUrl {
+	my ($class, $id) = @_;
+
+	return '' unless $id;
+
+	return 'tvh://stream/' . $id;
+}
+
+sub crackUrl {
+	my ($class, $url) = @_;
+
+	return unless $url;
+
+	my ($id) = $url =~ m{^tvh://stream/([^\.]+)$}
+
+    return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $id . Plugins::TVH::Prefs::getProfile();					
+}
 1;

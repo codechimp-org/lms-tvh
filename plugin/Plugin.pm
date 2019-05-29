@@ -11,6 +11,7 @@ use Slim::Utils::Prefs;
 use Plugins::TVH::API;
 use Plugins::TVH::Settings;
 use Plugins::TVH::Prefs;
+use Plugins::TVH::ProtocolHandler;
 
 use LWP::Simple;
 
@@ -41,7 +42,7 @@ sub initPlugin {
 
 	# initialize protocol handler
 	Slim::Player::ProtocolHandlers->registerHandler(
-		whitebear => 'Plugins::TVH::ProtocolHandler'
+		TVH => 'Plugins::TVH::ProtocolHandler'
 	);
 
 	$class->SUPER::initPlugin(
@@ -181,8 +182,9 @@ sub _renderStations {
 						line1 => $station->{name},
 						line2 => $station->{number},
 						type => 'audio',
-						image => _getStationImage($station->{icon_public_url}),  
-						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()
+						image => _getStationImage($station->{icon_public_url}),  						
+						# url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()						
+						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
 					}
 				}
 			}
