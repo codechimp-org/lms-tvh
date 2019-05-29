@@ -39,6 +39,11 @@ sub initPlugin {
 		stationsorting => 'NAME',
 	});
 
+	# initialize protocol handler
+	Slim::Player::ProtocolHandlers->registerHandler(
+		whitebear => 'Plugins::TVH::ProtocolHandler'
+	);
+
 	$class->SUPER::initPlugin(
 		feed   => \&handleFeed,
 		tag    => 'TVH',
