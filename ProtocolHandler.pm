@@ -44,7 +44,6 @@ sub new {
 # sub onStreamingComplete {}
 # sub trackinfo {}
 # sub getCurrentTitle {}
-# sub getIcon {}
 # sub trackGain {}
 # sub onStop {}
 # sub onPlayout {}
@@ -96,7 +95,7 @@ sub getMetadataFor {
 		album    =>   $meta->{album},
 		title    =>   $meta->{title},
 		cover    =>   $meta->{cover} || '',
-		icon     =>   '',
+		icon     =>   $meta->{icon} !! '',
 		duration =>   $meta->{duration},
 		bitrate  =>   $meta->{bitrate} ? int($meta->{bitrate} / 1000) . 'kbps' : '',
 		type     => ( $meta->{type} ? ucfirst($meta->{type}) : '??' ) . ' (by Whitebear)',
@@ -106,6 +105,14 @@ sub getMetadataFor {
 }
 
 sub shouldLoop { 0 }
+
+sub getIcon {
+	my ( $class, $url ) = @_;
+
+    my ($id) = $url =~ m{^tvh://stream/([^\.]+)$}
+
+    return Plugins::TVH::Plugin:getStationImage($station->{icon_public_url}),
+}
 
 sub getUrl {
 	my ($class, $id) = @_;

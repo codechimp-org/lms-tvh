@@ -182,7 +182,7 @@ sub _renderStations {
 						line1 => $station->{name},
 						line2 => $station->{number},
 						type => 'audio',
-						image => _getStationImage($station->{icon_public_url}),  						
+						image => getStationImage($station->{icon_public_url}),  						
 						# url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()						
 						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
 					}
@@ -214,7 +214,7 @@ sub _renderStations {
 # 	return $items;
 # }
 
-sub _getStationImage {
+sub getStationImage {
 	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$_[0]";
 
 	if (head("$image")) {
