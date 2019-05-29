@@ -106,13 +106,13 @@ sub getMetadataFor {
 
 sub shouldLoop { 0 }
 
-sub getIcon {
-	my ( $class, $url ) = @_;
-
-    my ($id) = $url =~ m{^tvh://stream/([^\.]+)$}
-
-    return Plugins::TVH::Plugin:getStationImage($station->{icon_public_url}),
-}
+# sub getIcon {
+# 	my ( $class, $url ) = @_;
+#
+#     my ($id) = $url =~ m{^tvh://stream/([^\.]+)$}
+#
+#     return Plugins::TVH::Plugin:getStationImage($station->{icon_public_url}),
+# }
 
 sub getUrl {
 	my ($class, $id) = @_;
