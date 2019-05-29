@@ -38,5 +38,5 @@ Neither andrew-codechimp or dozigden are experienced perl programmers so it may 
 ## Acknowledgements
 Inspired by plugins created by @michaelherger
 
-Initial idea for a plugin came from a post by netmax on how to stream a TVHeadend channel  
+Initial idea for this plugin came from a post by netmax on how to stream a TVHeadend channel  
 https://forums.slimdevices.com/showthread.php?108276-HowTo-Get-radio-streams-from-TVHeadend-server
