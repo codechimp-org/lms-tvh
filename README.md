@@ -7,7 +7,14 @@ lms-tvh is a plugin for Logitech Media Server to allow integration with TVHeaden
 ### TVHeadend Configuration
 To stream audio to Logitech Media Server a specific audio profile must be created.
 
-First setup a new profile
+* Within TVHeadend go to the Configuration Tab/Stream/Stream Profiles
+* Ensure your View level is set to Expert, otherwise you will not see all options
+* Add a Stream Profile
+* Choose Type - Transcode/av-lib
+* Name your profile squeeze (case sensitive, you will enter this later into the TVH plugin settings on Logitech Media Server)
+* Container: Raw Audio Stream
+* Audio Codec: aac (depending on your TVHeadend installation you may have to experiment with other codec's)
+* Press Create to save your new profile
 
 Optionally, if using TVHeadend security create a new user specifically for this plugin and set the default profile to be the one you just created above.
 
@@ -24,7 +31,7 @@ On the Logitech Media Server Settings page/Advanced tab choose TVH in the top le
 Provide your TVHeadend server details, username and password if using security and the profile name if not the default profile for the user or you are not using security.  
 Save your settings
 
-Within the Logitech Media Server home page you will now have TVH under AddOns where you can browse your TVHeadend Tags/Stations.
+Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.
 Stream and enjoy :)
 
 ## Disclaimer
