@@ -3,13 +3,13 @@
     <title lang="EN">TVH</title>
   </details>
   <plugins>
-    <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="1.0.86">
+    <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="1.0.87">
       <desc lang="EN">TVHeadend Radio Plugin for Logitech Media Server</desc>
       <title lang="EN">TVH</title>
       <email>squeeze@codechimp.org</email>
-      <url>https://tvh.codechimp.org/tvh-1.0.86.zip</url>
+      <url>https://tvh.codechimp.org/tvh-1.0.87.zip</url>
       <link>https://github.com/codechimp-org/lms-tvh</link>
-      <sha>87f61d051cce214238ff14ff978f616f5d4fc5ab</sha>
+      <sha>a6ad4fa4e839b40b0ff9e1172f7ecc34f2226fb8</sha>
       <creator>Andrew Jackson, Luke Easter</creator>
     </plugin>
   </plugins>
