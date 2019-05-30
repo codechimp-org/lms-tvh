@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><extensions>
   <details>
-    <title lang="EN">CodeChimp plugins</title>
+    <title lang="EN">TVH</title>
   </details>
   <plugins>
     <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="1.0.86">
