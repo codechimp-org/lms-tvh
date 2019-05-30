@@ -23,7 +23,7 @@ Go to the Logitech Media Server Settings page. On the Plugins tab insert the rep
 
 https://tvh.codechimp.org/repo.xml
 
-Save and restart the Logitech Media Server. 
+Press Apply and you will now have the option to Enable TVH, check it, Apply and restart the Logitech Media Server. 
 
 ### Logitech Media Server Configuration & Use
 On the Logitech Media Server Settings page/Advanced tab choose TVH in the top left drop down.
