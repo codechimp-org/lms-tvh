@@ -46,9 +46,6 @@ PLUGIN_TVH_PASSWORD
 PLUGIN_TVH_PASSWORD_DESC
 	EN	TVHeadend Password (optional)
 
-PLUGIN_TVH_INSTRUCTIONS_1
-	EN	Create a TVH account for LMS
-
 PLUGIN_TVH_STATION_SORTING
 	EN	Stations sorted by
 
@@ -60,3 +57,30 @@ PLUGIN_TVH_STATION_SORTING_NAME
 
 PLUGIN_TVH_STATION_SORTING_NUMBER
 	EN	Number
+
+PLUGIN_TVH_INSTRUCTIONS_1
+	EN	Within TVHeadend go to the Configuration Tab/Stream/Stream Profiles
+
+PLUGIN_TVH_INSTRUCTIONS_2
+	EN	Ensure your View level is set to Expert, otherwise you will not see all options
+
+PLUGIN_TVH_INSTRUCTIONS_3
+	EN	Add a Stream Profile
+
+PLUGIN_TVH_INSTRUCTIONS_4
+	EN	Choose Type - Transcode/av-lib
+
+PLUGIN_TVH_INSTRUCTIONS_5
+	EN	Name your profile squeeze (case sensitive, add it into the profile setting here as well)
+
+PLUGIN_TVH_INSTRUCTIONS_6
+	EN	Container: Raw Audio Stream
+
+PLUGIN_TVH_INSTRUCTIONS_7
+	EN	Audio Codec: aac (depending on your TVHeadend installation you may have to experiment with other codec's)
+
+PLUGIN_TVH_INSTRUCTIONS_8
+	EN	Press Create to save your new profile
+
+PLUGIN_TVH_INSTRUCTIONS_9
+	EN	Optionally, if using TVHeadend security create a new user specifically for this plugin and set the default profile to be the one you just created above.
