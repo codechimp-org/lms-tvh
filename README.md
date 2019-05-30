@@ -31,7 +31,7 @@ On the Logitech Media Server Settings page/Advanced tab choose TVH in the top le
 Provide your TVHeadend server details, username and password if using security and the profile name if not the default profile for the user or you are not using security.  
 Save your settings
 
-Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.
+Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.  
 Stream and enjoy :)
 
 ## Disclaimer
