@@ -101,10 +101,10 @@ sub handleFeed {
 		}
 
 		@$items = sort {$a->{name} cmp $b->{name}} @$items;
-	});
 
-	$cb->({
-		items => $items,
+		$cb->({
+			items => $items,
+		});
 	});
 }
 

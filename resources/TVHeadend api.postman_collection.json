@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "85137bea-6338-439a-a8b0-780b80f1c07f",
+		"_postman_id": "caaaf838-f0e0-48b1-bb0c-ffe1f667912f",
 		"name": "TVHeadend api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,13 +15,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://squeeze:squeeze@192.168.1.25:9981/api/channel/grid?limit=500",
+					"raw": "http://squeeze:squeeze@{{tvh_server}}:9981/api/channel/grid?limit=500",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"1",
-						"25"
+						"{{tvh_server}}"
 					],
 					"auth": {
 						"user": "squeeze",
@@ -44,6 +41,46 @@
 			"response": []
 		},
 		{
+			"name": "Get EPG",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://squeeze:squeeze@{{tvh_server}}:9981/api/epg/events/grid?limit=1&channel=8fb706196a53dec66fd3f5178c492154",
+					"protocol": "http",
+					"host": [
+						"{{tvh_server}}"
+					],
+					"auth": {
+						"user": "squeeze",
+						"password": "squeeze"
+					},
+					"port": "9981",
+					"path": [
+						"api",
+						"epg",
+						"events",
+						"grid"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "channel",
+							"value": "8fb706196a53dec66fd3f5178c492154"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Tags",
 			"request": {
 				"method": "GET",
@@ -53,13 +90,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://squeeze:squeeze@192.168.1.25:9981/api/channeltag/list",
+					"raw": "http://squeeze:squeeze@{{tvh_server}}:9981/api/channeltag/list",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"1",
-						"25"
+						"{{tvh_server}}"
 					],
 					"auth": {
 						"user": "squeeze",
@@ -70,6 +104,42 @@
 						"api",
 						"channeltag",
 						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recordings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://squeeze:squeeze@{{tvh_server}}:9981/api/dvr/entry/grid_finished?limit=500",
+					"protocol": "http",
+					"host": [
+						"{{tvh_server}}"
+					],
+					"auth": {
+						"user": "squeeze",
+						"password": "squeeze"
+					},
+					"port": "9981",
+					"path": [
+						"api",
+						"dvr",
+						"entry",
+						"grid_finished"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "500"
+						}
 					]
 				}
 			},

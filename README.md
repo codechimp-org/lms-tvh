@@ -1,5 +1,5 @@
 # lms-tvh
-lms-tvh is a plugin for Logitech Media Server to allow integration with TVHeadend to play live radio streams from TVHeadend.
+lms-tvh is a plugin for Logitech Media Server to allow playing of live radio streams from TVHeadend.
 
 ![alt text](https://github.com/andrew-codechimp/lms-tvh/raw/master/resources/lms-tvh-systemdiagram.png "System Diagram")
 
@@ -23,7 +23,7 @@ Go to the Logitech Media Server Settings page. On the Plugins tab insert the rep
 
 https://tvh.codechimp.org/repo.xml
 
-Save and restart the Logitech Media Server. 
+Press Apply and you will now have the option to Enable TVH, check it, Apply and restart the Logitech Media Server. 
 
 ### Logitech Media Server Configuration & Use
 On the Logitech Media Server Settings page/Advanced tab choose TVH in the top left drop down.
@@ -31,7 +31,7 @@ On the Logitech Media Server Settings page/Advanced tab choose TVH in the top le
 Provide your TVHeadend server details, username and password if using security and the profile name if not the default profile for the user or you are not using security.  
 Save your settings
 
-Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.
+Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.  
 Stream and enjoy :)
 
 ## Disclaimer
