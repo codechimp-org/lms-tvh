@@ -141,8 +141,6 @@ sub _call {
 	$url =~ s/^\///;
 	$url = Plugins::TVH::Prefs::getApiUrl(). $url;
 
-	$params->{per_page} ||= 9999;
-
 	if ( my @keys = sort keys %{$params}) {
 		my @params;
 		foreach my $key ( @keys ) {
@@ -154,25 +152,25 @@ sub _call {
 		$url .= '?' . join( '&', sort @params ) if scalar @params;
 	}
 
-	my $cached;
-	my $cache_key;
-	if (!$params->{_nocache}) {
-		$cache_key = md5_hex($url);
-	}
+	# my $cached;
+	# my $cache_key;
+	# if (!$params->{_nocache}) {
+	# 	$cache_key = md5_hex($url);
+	# }
 
-	main::INFOLOG && $log->is_info && $cache_key && $log->info("Trying to read from cache for $url");
+	# main::INFOLOG && $log->is_info && $cache_key && $log->info("Trying to read from cache for $url");
 
-	if ( $cache_key && ($cached = $cache->get($cache_key)) ) {
-		main::INFOLOG && $log->is_info && $log->info("Returning cached data for $url");
-		# main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
-		$cb->($cached);
-		return;
-	}
-	elsif ( main::INFOLOG && $log->is_info ) {
-		$log->debug("API call: $url");
-	}
+	# if ( $cache_key && ($cached = $cache->get($cache_key)) ) {
+	# 	main::INFOLOG && $log->is_info && $log->info("Returning cached data for $url");
+	# 	# main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
+	# 	$cb->($cached);
+	# 	return;
+	# }
+	# elsif ( main::INFOLOG && $log->is_info ) {
+	 	$log->debug("API call: $url");
+	# }
 
-	my $http = Slim::Networking::SimpleAsyncHTTP->new(
+	Slim::Networking::SimpleAsyncHTTP->new(
 		sub {
 			my $response = shift;
 			my $params   = $response->params('params');
@@ -191,25 +189,25 @@ sub _call {
 
 			# main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($result));
 
+			
 			if ($result && $result->{entries}) {
 				$result = $result->{entries};
 
-				if ( $cache_key ) {
-					if ( my $cache_control = $response->headers->header('Cache-Control') ) {
-						my ($ttl) = $cache_control =~ /max-age=(\d+)/;
+				# if ( $cache_key ) {
+				# 	if ( my $cache_control = $response->headers->header('Cache-Control') ) {
 
-						$ttl ||= CACHE_TTL;		# XXX - we're going to always cache for a while, as we often do follow up calls while navigating
+				# 		my $ttl = CACHE_TTL;
 
-						if ($ttl) {
-							main::INFOLOG && $log->is_info && $log->info("Caching result for $ttl using max-age (" . $response->url . ")");
-							$cache->set($cache_key, $result, $ttl);
-							main::INFOLOG && $log->is_info && $log->info("Data cached (" . $response->url . ")");
-						}
-					}
-				}
+				# 		if ($ttl) {
+				# 			main::INFOLOG && $log->is_info && $log->info("Caching result for $ttl using max-age (" . $response->url . ")");
+				# 			$cache->set($cache_key, $result, $ttl);
+				# 			main::INFOLOG && $log->is_info && $log->info("Data cached (" . $response->url . ")");
+				# 		}
+				# 	}
+				# }
 			}
 
-			$cb->($result, $response);
+			$cb->($result);
 		},
 		sub {
 			my ($http, $error, $response) = @_;
@@ -221,9 +219,7 @@ sub _call {
 				error => 'Unexpected error: ' . $error,
 			}, $response);
 		},
-	);
-
-	$http->get($url);
+	)->get($url);
 }
 
 1;
