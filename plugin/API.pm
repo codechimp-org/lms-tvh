@@ -164,7 +164,7 @@ sub _call {
 
 	if ( $cache_key && ($cached = $cache->get($cache_key)) ) {
 		main::INFOLOG && $log->is_info && $log->info("Returning cached data for $url");
-		main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
+		# main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($cached));
 		$cb->($cached);
 		return;
 	}
@@ -180,7 +180,7 @@ sub _call {
 			my $result;
 
 			if ( $response->headers->content_type =~ /json/i ) {
-				$log->info('TVH got a response: ' . $response->content);
+				# $log->info('TVH got a response: ' . $response->content);
 				$result = decode_json(
 					$response->content,
 				);
@@ -189,7 +189,7 @@ sub _call {
 				$log->error("TVHeadend didn't return JSON data? " . $response->content);
 			}
 
-			main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($result));
+			# main::DEBUGLOG && $log->is_debug && $log->debug(Data::Dump::dump($result));
 
 			if ($result && $result->{entries}) {
 				$result = $result->{entries};
@@ -216,7 +216,7 @@ sub _call {
 
 			$log->error("Got error': $error");
 
-			main::INFOLOG && $log->is_info && $log->info(Data::Dump::dump($response));
+			# main::INFOLOG && $log->is_info && $log->info(Data::Dump::dump($response));
 			$cb->({
 				error => 'Unexpected error: ' . $error,
 			}, $response);
