@@ -180,7 +180,7 @@ sub _call {
 			my $result;
 
 			if ( $response->headers->content_type =~ /json/i ) {
-				# $log->info('TVH got a response: ' . $response->content);
+				$log->info('TVH got a response: ' . $response->content);
 				$result = decode_json(
 					$response->content,
 				);
