@@ -1,58 +1,58 @@
 [% PROCESS settings/header.html %]
 
-	[% WRAPPER setting title="PLUGIN_TVH" desc="" %]
-		<div class="prefDesc">[% "PLUGIN_TVH_DESC" | string %]</div>
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH" desc="" %]
+<div class="prefDesc">[% "PLUGIN_TVH_DESC" | string %]</div>
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_SERVER" desc="PLUGIN_TVH_SERVER_DESC" %]
-		<input type="text" class="stdedit" name="pref_server" id="pref_server" value="[% prefs.pref_server %]" size="40">
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_SERVER" desc="PLUGIN_TVH_SERVER_DESC" %]
+<input type="text" class="stdedit" name="pref_server" id="pref_server" value="[% prefs.pref_server %]" size="40">
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_PORT" desc="PLUGIN_TVH_PORT_DESC" %]
-		<input type="text" class="stdedit" name="pref_port" id="pref_port" value="[% prefs.pref_port %]" size="10">
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_PORT" desc="PLUGIN_TVH_PORT_DESC" %]
+<input type="text" class="stdedit" name="pref_port" id="pref_port" value="[% prefs.pref_port %]" size="10">
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_PROFILE" desc="PLUGIN_TVH_PROFILE_DESC" %]
-		<input type="text" class="stdedit" name="pref_profile" id="pref_profile" value="[% prefs.pref_profile %]" size="40">
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_PROFILE" desc="PLUGIN_TVH_PROFILE_DESC" %]
+<input type="text" class="stdedit" name="pref_profile" id="pref_profile" value="[% prefs.pref_profile %]" size="40">
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_USERNAME" desc="PLUGIN_TVH_USERNAME_DESC" %]
-		<input type="text" class="stdedit" name="pref_username" id="pref_username" value="[% prefs.pref_username %]" size="40">
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_USERNAME" desc="PLUGIN_TVH_USERNAME_DESC" %]
+<input type="text" class="stdedit" name="pref_username" id="pref_username" value="[% prefs.pref_username %]" size="40">
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_PASSWORD" desc="PLUGIN_TVH_PASSWORD_DESC" %]
-		<input type="password" class="stdedit" name="ppref_assword" id="pref_password" value="[% prefs.pref_password %]" size="40">
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_PASSWORD" desc="PLUGIN_TVH_PASSWORD_DESC" %]
+<input type="password" class="stdedit" name="ppref_assword" id="pref_password" value="[% prefs.pref_password %]" size="40">
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_STATION_SORTING" desc="PLUGIN_TVH_STATION_SORTING_DESC" %]
-	<div>
-		<select class="stdedit" name="pref_stationsorting" id="pref_stationsorting">
-		  [% FOREACH option = pref_stationsortingopts %]
-		  <option value=[% option.stationsorting %] [% IF prefs.pref_stationsorting == option.stationsorting; "selected"; END %]>[% option.stationsortingtext %]</option>
-		  [% END %]
-		</select>
-	</div>
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_STATION_SORTING" desc="PLUGIN_TVH_STATION_SORTING_DESC" %]
+<div>
+	<select class="stdedit" name="pref_stationsorting" id="pref_stationsorting">
+		[% FOREACH option = pref_stationsortingopts %]
+		<option value=[% option.stationsorting %] [% IF prefs.pref_stationsorting == option.stationsorting; "selected"; END %]>[% option.stationsortingtext %]</option>
+		[% END %]
+	</select>
+</div>
+[% END %]
 
-	[% WRAPPER setting title="PLUGIN_TVH_INSTRUCTIONS" desc="" %]
-		<div class="tvh-instructions">
-			<ul style="list-style-type:disc;">
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_1" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_2" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_3" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_4" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_5" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_6" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_7" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_8" | string %]</li>
-				<li>[% "PLUGIN_TVH_INSTRUCTIONS_9" | string %]</li>
-			</ul>
-			<br/>
-			<a href="https://github.com/codechimp-org/lms-tvh" target="_blank">Technical Info/Issue Tracker</a>
-			<br/>
-			<a href="https://forums.slimdevices.com/showthread.php?110619-ANNOUNCE-TVH-Plugin-TVHeadend-integration" target="_blank">Discussion Thread</a>
-			
-		</div>
-	[% END %]
+[% WRAPPER setting title="PLUGIN_TVH_INSTRUCTIONS" desc="" %]
+<div class="tvh-instructions">
+	<ul style="list-style-type:disc;">
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_1" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_2" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_3" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_4" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_5" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_6" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_7" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_8" | string %]</li>
+		<li>[% "PLUGIN_TVH_INSTRUCTIONS_9" | string %]</li>
+	</ul>
+	<br/>
+	<a href="https://github.com/codechimp-org/lms-tvh" target="_blank">Technical Info/Issue Tracker</a>
+	<br/><br/>
+	<a href="https://forums.slimdevices.com/showthread.php?110619-ANNOUNCE-TVH-Plugin-TVHeadend-integration" target="_blank">Discussion Thread</a>
+	
+</div>
+[% END %]
 
 [% PROCESS settings/footer.html %]
