@@ -42,8 +42,10 @@ If you find something wrong then pull requests are welcome, or raise an issue.  
 
 Neither andrew-codechimp or dozigden are experienced perl programmers so it may take us some time to work out fixes.
 
+[Discussion forum thread](https://forums.slimdevices.com/showthread.php?110619-ANNOUNCE-TVH-Plugin-TVHeadend-integration)
+
 ## Acknowledgements
 Inspired by plugins created by @michaelherger
 
-Initial idea for this plugin came from a post by netmax on how to stream a TVHeadend channel  
-https://forums.slimdevices.com/showthread.php?108276-HowTo-Get-radio-streams-from-TVHeadend-server
+Initial idea for this plugin came from a [post by netmax](https://forums.slimdevices.com/showthread.php?108276-HowTo-Get-radio-streams-from-TVHeadend-server)
+ on how to stream a TVHeadend channel
