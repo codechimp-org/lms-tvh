@@ -107,7 +107,8 @@ sub getMetadataFor {
 	$epg = (@$epg)[0];
 
 	$meta = {
-		title    => $epg->{title},
+		title    => $epg->{channelName} . ' - ' . $epg->{title},
+		
 		# album    => $album->{title} || '',
 		# albumId  => $album->{id},
 		# artist   => $class->getArtistName($track, $album),
