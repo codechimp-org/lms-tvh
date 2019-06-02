@@ -95,7 +95,7 @@ sub getMetadataFor {
 		album    =>   $meta->{album},
 		title    =>   $meta->{title},
 		cover    =>   $meta->{cover} || '',
-		icon     =>   $meta->{icon} !! '',
+		icon     =>   $meta->{icon} || '',
 		duration =>   $meta->{duration},
 		bitrate  =>   $meta->{bitrate} ? int($meta->{bitrate} / 1000) . 'kbps' : '',
 		type     => ( $meta->{type} ? ucfirst($meta->{type}) : '??' ) . ' (by Whitebear)',
@@ -127,8 +127,9 @@ sub crackUrl {
 
 	return unless $url;
 
-	my ($id) = $url =~ m{^tvh://stream/([^\.]+)$}
+	my ($id) = $url =~ m{^tvh://stream/([^\.]+)$};
 
     return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $id . Plugins::TVH::Prefs::getProfile();					
 }
+
 1;

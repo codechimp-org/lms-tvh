@@ -41,9 +41,9 @@ sub initPlugin {
 	});
 
 	# initialize protocol handler
-	Slim::Player::ProtocolHandlers->registerHandler(
-		TVH => 'Plugins::TVH::ProtocolHandler'
-	);
+	# Slim::Player::ProtocolHandlers->registerHandler(
+	# 	TVH => 'Plugins::TVH::ProtocolHandler'
+	# );
 
 	$class->SUPER::initPlugin(
 		feed   => \&handleFeed,
@@ -183,9 +183,16 @@ sub _renderStations {
 						line2 => $station->{number},
 						type => 'audio',
 						image => getStationImage($station->{icon_public_url}),  						
-						# url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()						
-						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
-					}
+						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()						
+						# url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
+					};
+
+					Plugins::TVH::API->getEpgCurrent(sub {
+						my ($epg) = @_;
+						for my $epgrow (@$epg) {
+							$log->info('EPG: ' . $epgrow->{title});
+						}
+					}, $station->{uuid});
 				}
 			}
 		}
