@@ -6,6 +6,7 @@ use base qw(Slim::Player::Protocols::HTTP);
 use Slim::Utils::Cache;
 use Slim::Utils::Log;
 use Slim::Utils::Misc;
+use Slim::Utils::Prefs;
 
 use Plugins::TVH::Prefs;
 use Plugins::TVH::API;
@@ -75,6 +76,7 @@ sub getMetadataFor {
 	my ($id) = $class->crackStreamUrl($url);
 	$id ||= $url;
 
+	my $epg;
 	my $meta;
 
 	# grab metadata from backend if needed, otherwise use cached values
@@ -100,7 +102,7 @@ sub getMetadataFor {
 						# 	$log->info('EPG: ' . $epgrow->{title});
 						# }
 
-					}, $station->{uuid});
+					}, $id);
 
 	$epg = (@$epg)[0];
 
