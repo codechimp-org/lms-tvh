@@ -11,7 +11,7 @@ use Slim::Utils::Prefs;
 use Plugins::TVH::API;
 use Plugins::TVH::Settings;
 use Plugins::TVH::Prefs;
-use Plugins::TVH::ProtocolHandler;
+# use Plugins::TVH::ProtocolHandler;
 
 use LWP::Simple;
 
@@ -184,14 +184,15 @@ sub _renderStations {
 						type => 'audio',
 						image => getStationImage($station->{icon_public_url}),  						
 						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()						
-						# url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
+						#url => Plugins::TVH::ProtocolHandler->getStreamUrl($station->{number})
 					};
 
 					Plugins::TVH::API->getEpg(sub {
 						my ($epg) = @_;
-						for my $epgrow (@$epg) {
-							$log->info('EPG: ' . $epgrow->{title});
-						}
+
+						my $epgrow = (@$epg)[0];
+						$log->info('EPG: ' . $epgrow->{title});
+
 					}, $station->{uuid});
 				}
 			}
