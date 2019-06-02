@@ -187,7 +187,7 @@ sub _renderStations {
 						# url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
 					};
 
-					Plugins::TVH::API->getEpgCurrent(sub {
+					Plugins::TVH::API->getEpg(sub {
 						my ($epg) = @_;
 						for my $epgrow (@$epg) {
 							$log->info('EPG: ' . $epgrow->{title});

@@ -40,7 +40,7 @@ sub getRecordings {
 	_call('/api/dvr/entry/grid_finished?limit=500', $cb);
 }
 
-sub getEpgCurrent {
+sub getEpg {
 	my ($class, $cb, $channel) = @_;
 	_call("/api/epg/events/grid?limit=1&channel=${channel}", $cb);
 }
