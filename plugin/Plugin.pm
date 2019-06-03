@@ -181,7 +181,7 @@ sub _renderStations {
 						line1 => $station->{name},
 						line2 => $station->{number},
 						type => 'audio',
-						image => getStationImage($station->{icon_public_url}),  												
+						# image => getStationImage($station->{icon_public_url}), 
 						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
 					}
 				}

@@ -46,8 +46,6 @@ sub scanUrl {
 
 sub isRemote { 1 }
 
-sub isAudioURL { 1 }
-
 sub canDirectStreamSong {
 	my ( $class, $client, $song ) = @_;
 
