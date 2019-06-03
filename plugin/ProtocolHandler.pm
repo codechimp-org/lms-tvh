@@ -78,6 +78,8 @@ sub getMetadataFor {
 	my ($id) = $class->crackUrl($url);
 	$id ||= $url;
 
+	$log->info('getMetaDataFor: ' . $url);
+
 	my $epg;
 	my $meta = {};
 
@@ -94,22 +96,24 @@ sub getMetadataFor {
 		}, $id);
 	# }
 
-				Plugins::TVH::API->getEpg(sub {
-						my ($epg) = @_;
+		Plugins::TVH::API->getEpg(sub {
+				my ($epg) = @_;
 
-						my $epgrow = (@$epg)[0];
-						$log->info('EPG: ' . $epgrow->{title});
-						
-						# for my $epgrow (@$epg) {
-						# 	$log->info('EPG: ' . $epgrow->{title});
-						# }
+				my $epgrow = (@$epg)[0];
+				$log->info('EPG: ' . $epgrow->{title});
+				
+				# for my $epgrow (@$epg) {
+				# 	$log->info('EPG: ' . $epgrow->{title});
+				# }
 
-					}, $id);
+			}, $id);
 
 	# $epg = (@$epg)[0];
 
-	# $meta = {
+	 $meta = {
 	# 	title    => $epg->{channelName} . ' - ' . $epg->{title},
+		icon    => 'http://192.168.3.142:9981/imagecache/51',
+		cover    => 'http://192.168.3.142:9981/imagecache/51',
 		
 	# 	# album    => $album->{title} || '',
 	# 	# albumId  => $album->{id},
@@ -122,7 +126,7 @@ sub getMetadataFor {
 	# 	# duration => $track->{duration} || 0,
 	# 	# year     => $album->{year} || (localtime($album->{released_at}))[5] + 1900 || 0,
 	# 	# goodies  => $album->{goodies},
-	# };
+	};
 
 	return $meta;
 }
@@ -136,6 +140,22 @@ sub shouldLoop { 0 }
 #
 #     return Plugins::TVH::Plugin:getStationImage($station->{icon_public_url}),
 # }
+
+sub getIcon {
+	my ( $class, $url ) = @_;
+
+	$log->info('getIcon: ' . $url);
+
+	my $id = crackUrl($url);
+	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$id";
+
+	if (head("$image")) {
+		return "$image";
+	}
+	else {
+		return "plugins/TVH/html/images/radio.png";
+	}
+}
 
 sub getUrl {
 	my ($class, $id) = @_;

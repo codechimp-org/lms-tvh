@@ -41,8 +41,7 @@ sub initPlugin {
 	});
 
 	# initialize protocol handler
-	Slim::Player::ProtocolHandlers->registerHandler('tvh', 'Plugins::TVH::ProtocolHandler'
-	);
+	Slim::Player::ProtocolHandlers->registerHandler('tvh', 'Plugins::TVH::ProtocolHandler');
 
 	$class->SUPER::initPlugin(
 		feed   => \&handleFeed,
@@ -176,6 +175,7 @@ sub _renderStations {
 		for my $row (@tags) {
 			for my $element (@$row) { 
 				if ($element eq $tag) {
+
 					push @$items, {
 						name => $station->{name},
 						line1 => $station->{name},
@@ -183,17 +183,7 @@ sub _renderStations {
 						type => 'audio',
 						image => getStationImage($station->{icon_public_url}),  												
 						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
-					};
-
-#url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()
-
-					Plugins::TVH::API->getEpg(sub {
-						my ($epg) = @_;
-
-						my $epgrow = (@$epg)[0];
-						$log->info('EPG: ' . $epgrow->{title});
-
-					}, $station->{uuid});
+					}
 				}
 			}
 		}
@@ -231,7 +221,6 @@ sub getStationImage {
 	else {
 		return "plugins/TVH/html/images/radio.png";
 	}
-
 }
 
 1;
