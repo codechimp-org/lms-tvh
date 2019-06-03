@@ -21,22 +21,22 @@ sub new {
 
 	my $client    = $args->{client};
 	my $song      = $args->{song};
-	my $streamUrl = $song->streamUrl() || return;
+	my $streamUrl = crackUrl($song->streamUrl()) || return;
+
+	my $self;
 
 	main::DEBUGLOG && $log->is_debug && $log->debug( 'Remote streaming TVH track: ' . $streamUrl );
 
 	my $mime = $song->pluginData('mime');
 
-	my $sock = $class->SUPER::new( {
+	$self = $class->SUPER::new( { 
 		url     => $streamUrl,
 		song    => $song,
 		client  => $client,
-#		bitrate => $mime =~ /flac/i ? 750_000 : MP3_BITRATE,
-	} ) || return;
+		create  => 1,
+	} );
 
-	${*$sock}{contentType} = $mime;
-
-	return $sock;
+	return $self;
 }
 
 sub scanUrl {
@@ -51,12 +51,14 @@ sub isAudioURL { 1 }
 sub canDirectStreamSong {
 	my ( $class, $client, $song ) = @_;
 
+	main::DEBUGLOG && $log->is_debug && $log->debug( 'TVH track: ' . $song->streamUrl() );
+
 	# We need to check with the base class (HTTP) to see if we
 	# are synced or if the user has set mp3StreamingMethod
-	return $class->SUPER::canDirectStream( $client, $song->streamUrl() );
+	return $class->SUPER::canDirectStream( $client, crackUrl($song->streamUrl()) );
 }
 
-sub audioScrobblerSource { 'P' }
+sub audioScrobblerSource { 'R' }
 
 sub canSeek { 0 }
 
@@ -73,11 +75,11 @@ sub getFormatForURL {
 sub getMetadataFor {
 	my ( $class, $client, $url ) = @_;
 
-	my ($id) = $class->crackStreamUrl($url);
+	my ($id) = $class->crackUrl($url);
 	$id ||= $url;
 
 	my $epg;
-	my $meta;
+	my $meta = {};
 
 	# grab metadata from backend if needed, otherwise use cached values
 	# if ($id && $client->master->pluginData('fetchingMeta')) {
@@ -104,23 +106,23 @@ sub getMetadataFor {
 
 					}, $id);
 
-	$epg = (@$epg)[0];
+	# $epg = (@$epg)[0];
 
-	$meta = {
-		title    => $epg->{channelName} . ' - ' . $epg->{title},
+	# $meta = {
+	# 	title    => $epg->{channelName} . ' - ' . $epg->{title},
 		
-		# album    => $album->{title} || '',
-		# albumId  => $album->{id},
-		# artist   => $class->getArtistName($track, $album),
-		# artistId => $album->{artist}->{id} || '',
-		# composer => $track->{composer}->{name} || '',
-		# composerId => $track->{composer}->{id} || '',
-		# performers => $track->{performers} || '',
-		# cover    => $album->{image}->{large} || '',
-		# duration => $track->{duration} || 0,
-		# year     => $album->{year} || (localtime($album->{released_at}))[5] + 1900 || 0,
-		# goodies  => $album->{goodies},
-	};
+	# 	# album    => $album->{title} || '',
+	# 	# albumId  => $album->{id},
+	# 	# artist   => $class->getArtistName($track, $album),
+	# 	# artistId => $album->{artist}->{id} || '',
+	# 	# composer => $track->{composer}->{name} || '',
+	# 	# composerId => $track->{composer}->{id} || '',
+	# 	# performers => $track->{performers} || '',
+	# 	# cover    => $album->{image}->{large} || '',
+	# 	# duration => $track->{duration} || 0,
+	# 	# year     => $album->{year} || (localtime($album->{released_at}))[5] + 1900 || 0,
+	# 	# goodies  => $album->{goodies},
+	# };
 
 	return $meta;
 }
@@ -135,7 +137,7 @@ sub shouldLoop { 0 }
 #     return Plugins::TVH::Plugin:getStationImage($station->{icon_public_url}),
 # }
 
-sub getStreamUrl {
+sub getUrl {
 	my ($class, $id) = @_;
 
 	return '' unless $id;
@@ -143,12 +145,14 @@ sub getStreamUrl {
 	return 'tvh://stream/' . $id;
 }
 
-sub crackStreamUrl {
+sub crackUrl {
 	my ($class, $url) = @_;
 
 	return unless $url;
 
 	my ($id) = $url =~ m{^tvh://stream/([^\.]+)$};
+
+	$log->debug( 'Cracked Channel ID: ' . $id );
 
     return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $id . Plugins::TVH::Prefs::getProfile();					
 }
