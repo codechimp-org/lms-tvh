@@ -11,6 +11,9 @@ use Slim::Utils::Prefs;
 use Plugins::TVH::Prefs;
 use Plugins::TVH::API;
 
+use LWP::Simple;
+use Data::Dumper;
+
 my $prefs = preferences('plugin.TVH');
 
 my $log = logger('plugin.TVH');
@@ -21,22 +24,27 @@ sub new {
 
 	my $client    = $args->{client};
 	my $song      = $args->{song};
-	my $streamUrl = crackUrl($song->streamUrl()) || return;
+	my $realStreamUrl = getStreamURL($song->streamUrl()) || return;
 
 	my $self;
 
-	main::DEBUGLOG && $log->is_debug && $log->debug( 'Remote streaming TVH track: ' . $streamUrl );
+	main::DEBUGLOG && $log->is_debug && $log->debug( 'Remote streaming TVH track: ' . $realStreamUrl );
+
+
+#[19-06-07 10:30:33.5203] Slim::Player::Song::open (472) Warning: stream failed to open [tvh://stream?channelnumber=707&uuid=8fb706196a53dec66fd3f5178c492154&icon=imagecache/17].
 
 	my $mime = $song->pluginData('mime');
 
-	$self = $class->SUPER::new( { 
-		url     => $streamUrl,
+	my $sock = $class->SUPER::new( { 
+		url     => $realStreamUrl,
 		song    => $song,
 		client  => $client,
 		create  => 1,
 	} );
 
-	return $self;
+	${*$sock}{contentType} = 'audio/aac';
+
+	return $sock;
 }
 
 sub scanUrl {
@@ -49,31 +57,35 @@ sub isRemote { 1 }
 sub canDirectStreamSong {
 	my ( $class, $client, $song ) = @_;
 
-	main::DEBUGLOG && $log->is_debug && $log->debug( 'TVH track: ' . $song->streamUrl() );
+	# main::DEBUGLOG && $log->is_debug && $log->debug( 'TVH track: ' . $song->streamUrl() );
 
-	# We need to check with the base class (HTTP) to see if we
-	# are synced or if the user has set mp3StreamingMethod
-	return $class->SUPER::canDirectStream( $client, crackUrl($song->streamUrl()) );
+	# # We need to check with the base class (HTTP) to see if we
+	# # are synced or if the user has set mp3StreamingMethod
+	# return $class->SUPER::canDirectStream( $client, getStreamURL($song->streamUrl()) );
+
+	return 1;
 }
 
 sub audioScrobblerSource { 'R' }
 
 sub canSeek { 0 }
 
-sub getFormatForURL {
-	my $classOrSelf = shift;
-	my $url = shift;
+# sub getFormatForURL {
+# 	my $classOrSelf = shift;
+# 	my $url = shift;
 
-	my $cache = Slim::Utils::Cache->new;
-	my $meta  = $cache->get( $url );
+# 	my $cache = Slim::Utils::Cache->new;
+# 	my $meta  = $cache->get( $url );
 
-	return $meta->{type};
-}
+# 	return $meta->{type};
+# }
+
+sub getFormatForURL { 'aac' }
 
 sub getMetadataFor {
 	my ( $class, $client, $url ) = @_;
 
-	my ($id) = $class->crackUrl($url);
+	my ($id) = $class->getUUID($url);
 	$id ||= $url;
 
 	$log->info('getMetaDataFor: ' . $url);
@@ -110,8 +122,8 @@ sub getMetadataFor {
 
 	 $meta = {
 	# 	title    => $epg->{channelName} . ' - ' . $epg->{title},
-		icon    => 'http://192.168.3.142:9981/imagecache/51',
-		cover    => 'http://192.168.3.142:9981/imagecache/51',
+		icon    => $class->getIcon($url),
+		cover    => $class->getIcon($url),
 		
 	# 	# album    => $album->{title} || '',
 	# 	# albumId  => $album->{id},
@@ -144,8 +156,8 @@ sub getIcon {
 
 	$log->info('getIcon: ' . $url);
 
-	my $id = crackUrl($url);
-	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$id";
+	my $iconurl = getIconURL($url);
+	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$iconurl";
 
 	if (head("$image")) {
 		return "$image";
@@ -155,24 +167,45 @@ sub getIcon {
 	}
 }
 
-sub getUrl {
-	my ($class, $id) = @_;
-
-	return '' unless $id;
-
-	return 'tvh://stream/' . $id;
+sub getTVHUrl {
+	my ($class, $station) = @_;
+	return 'tvh://stream?channelnumber=' . $station->{number} . '&uuid=' . $station->{uuid} . '&icon=' . $station->{icon_public_url};
 }
 
-sub crackUrl {
-	my ($class, $url) = @_;
+# sub crackUrl {
+# 	my ($class, $url) = @_;
+# 	return unless $url;
 
+# 	my ($channelnumber) = $url =~ m{^tvh://stream\?channelnumber=([^\.]+)\&};
+# 	my ($uuid) = $url =~ m{\&uuid=(.*)$};
+
+# 	$log->debug( 'Cracked URL: ' . $channelnumber . ':' . $uuid );
+
+#     return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $channelnumber . Plugins::TVH::Prefs::getProfile();					
+# }
+
+sub getStreamURL {
+	my ($class, $url) = @_;
 	return unless $url;
 
-	my ($id) = $url =~ m{^tvh://stream/([^\.]+)$};
+	my ($channelnumber) = $url =~ m{^tvh://stream\?channelnumber=([^\.]+)\&};
+    return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $channelnumber . Plugins::TVH::Prefs::getProfile();					
+}
 
-	$log->debug( 'Cracked Channel ID: ' . $id );
+sub getUUID {
+	my ($class, $url) = @_;
+	return unless $url;
 
-    return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $id . Plugins::TVH::Prefs::getProfile();					
+	my ($uuid) = $url =~ m{\&uuid=(.*)\&};
+    return $uuid;					
+}
+
+sub getIconURL {
+	my ($class, $url) = @_;
+	return unless $url;
+
+	my ($uuid) = $url =~ m{\&icon=(.*)$};
+    return $uuid;					
 }
 
 1;

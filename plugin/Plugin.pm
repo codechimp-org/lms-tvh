@@ -14,7 +14,6 @@ use Plugins::TVH::Prefs;
 use Plugins::TVH::ProtocolHandler;
 
 use LWP::Simple;
-
 use Data::Dumper;
 
 my $prefs = preferences('plugin.TVH');
@@ -175,14 +174,13 @@ sub _renderStations {
 		for my $row (@tags) {
 			for my $element (@$row) { 
 				if ($element eq $tag) {
-
 					push @$items, {
 						name => $station->{name},
 						line1 => $station->{name},
 						line2 => $station->{number},
 						type => 'audio',
 						# image => getStationImage($station->{icon_public_url}), 
-						url => Plugins::TVH::ProtocolHandler->getUrl($station->{number})
+						url => Plugins::TVH::ProtocolHandler->getTVHUrl($station)
 					}
 				}
 			}
