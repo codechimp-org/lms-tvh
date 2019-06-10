@@ -173,14 +173,16 @@ sub getIcon {
 	my $stationName = $class->getStationName($url);
 	$log->debug('getIcon:' . $url . ':' . $stationName);
 
-	# Plugins::TVH::API->getStation(sub {
-	# 		my ($station) = @_;
-	# 		my $image = $class->getStationImage($station->{icon_public_url});	
-	# 		$log->debug('getIconImage:' . $image);
-	# 		return $image;
-	# 	}, $stationName);
+	my($image);
 
-	return "plugins/TVH/html/images/radio.png";
+	Plugins::TVH::API->getStation(sub {
+			my ($station) = @_;
+			$image = $class->getStationImage($station->{icon_public_url});	
+			$log->debug('getIconImage:' . $image);
+		}, $stationName);
+
+	$log->debug('getIcon:' . $image);
+	return $image;
 }
 
 sub getTVHUrl {

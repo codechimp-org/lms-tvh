@@ -52,8 +52,8 @@ sub getEpg {
 	my ($class, $cb, $channel) = @_;
 
 	_call("/api/epg/events/grid?limit=1&channel=${channel}", sub {
-	my ($epg) = @_;
-	return (@$epg)[0];
+		my ($epg) = @_;
+		$cb->((@$epg)[0]);
 	});
 }
 
