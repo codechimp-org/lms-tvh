@@ -13,6 +13,7 @@ use Plugins::TVH::API;
 
 use LWP::Simple;
 use Data::Dumper;
+use URI::Escape;
 
 my $prefs = preferences('plugin.TVH');
 
@@ -24,27 +25,25 @@ sub new {
 
 	my $client    = $args->{client};
 	my $song      = $args->{song};
-	my $realStreamUrl = getStreamURL($song->streamUrl()) || return;
 
-	my $self;
+	my $stationName = getStationName($song->streamUrl());
+	$log->debug('new:' . $stationName);
 
-	main::DEBUGLOG && $log->is_debug && $log->debug( 'Remote streaming TVH track: ' . $realStreamUrl );
+	Plugins::TVH::API->getStation(sub {
+			my ($station) = @_;
+			my $realStreamUrl = getStreamURL($station->{number});
 
+			my $sock = $class->SUPER::new( { 
+				url     => $realStreamUrl,
+				song    => $song,
+				client  => $client,
+				create  => 1,
+			} );
 
-#[19-06-07 10:30:33.5203] Slim::Player::Song::open (472) Warning: stream failed to open [tvh://stream?channelnumber=707&uuid=8fb706196a53dec66fd3f5178c492154&icon=imagecache/17].
+			${*$sock}{contentType} = 'audio/aac';
 
-	my $mime = $song->pluginData('mime');
-
-	my $sock = $class->SUPER::new( { 
-		url     => $realStreamUrl,
-		song    => $song,
-		client  => $client,
-		create  => 1,
-	} );
-
-	${*$sock}{contentType} = 'audio/aac';
-
-	return $sock;
+			return $sock;
+		}, $stationName);
 }
 
 sub scanUrl {
@@ -82,15 +81,39 @@ sub canSeek { 0 }
 
 sub getFormatForURL { 'aac' }
 
+sub getNextTrack {
+	my ($class, $song, $successCb, $errorCb) = @_;
+	
+	my $nextURL = $song->currentTrack()->url;
+
+	my $stationName = getStationName($nextURL);
+	$log->debug('new:' . $stationName);
+
+	Plugins::TVH::API->getStation(sub {
+			my ($callback, $station) = @_;
+			my $realStreamUrl = getStreamURL($station->{number});
+
+			my $http     = shift;
+			my $params   = $http->params;
+			my $song     = $params->{'song'};
+			
+			$song->streamUrl($realStreamUrl);
+			
+			$callback->();
+
+		}, $successCb, $stationName);
+	
+}
+
 sub getMetadataFor {
 	my ( $class, $client, $url ) = @_;
 
-	my ($id) = $class->getUUID($url);
-	$id ||= $url;
+	# my ($id) = $class->getUUID($url);
+	# $id ||= $url;
 
-	$log->info('getMetaDataFor: ' . $url);
+	# $log->info('getMetaDataFor: ' . $url);
 
-	my $epg;
+	# my $epg;
 	my $meta = {};
 
 	# grab metadata from backend if needed, otherwise use cached values
@@ -99,24 +122,17 @@ sub getMetadataFor {
 	# 	$epg = Plugins::TVH::API->getCachedFileInfo($id);
 	# }
 	# elsif ($id) {
-		$client->master->pluginData( fetchingMeta => 1 );
+	# 	$client->master->pluginData( fetchingMeta => 1 );
 
-		$epg = Plugins::TVH::API->getEpg(sub {
-			$client->master->pluginData( fetchingMeta => 0 );
-		}, $id);
-	# }
+	# 	$epg = Plugins::TVH::API->getEpg(sub {
+	# 		$client->master->pluginData( fetchingMeta => 0 );
+	# 	}, $id);
+	# # }
 
-		Plugins::TVH::API->getEpg(sub {
-				my ($epg) = @_;
-
-				my $epgrow = (@$epg)[0];
-				$log->info('EPG: ' . $epgrow->{title});
-				
-				# for my $epgrow (@$epg) {
-				# 	$log->info('EPG: ' . $epgrow->{title});
-				# }
-
-			}, $id);
+	# 	Plugins::TVH::API->getEpg(sub {
+	# 			my ($epg) = @_;			
+	# 			log->info('EPG: ' . $epg->{title});
+	# 		}, $id);
 
 	# $epg = (@$epg)[0];
 
@@ -154,22 +170,22 @@ sub shouldLoop { 0 }
 sub getIcon {
 	my ( $class, $url ) = @_;
 
-	$log->info('getIcon: ' . $url);
+	my $stationName = $class->getStationName($url);
+	$log->debug('getIcon:' . $url . ':' . $stationName);
 
-	my $iconurl = getIconURL($url);
-	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . "$iconurl";
+	# Plugins::TVH::API->getStation(sub {
+	# 		my ($station) = @_;
+	# 		my $image = $class->getStationImage($station->{icon_public_url});	
+	# 		$log->debug('getIconImage:' . $image);
+	# 		return $image;
+	# 	}, $stationName);
 
-	if (head("$image")) {
-		return "$image";
-	}
-	else {
-		return "plugins/TVH/html/images/radio.png";
-	}
+	return "plugins/TVH/html/images/radio.png";
 }
 
 sub getTVHUrl {
 	my ($class, $station) = @_;
-	return 'tvh://stream?channelnumber=' . $station->{number} . '&uuid=' . $station->{uuid} . '&icon=' . $station->{icon_public_url};
+	return 'tvh://stream?station=' . URI::Escape::uri_escape_utf8($station->{name});
 }
 
 # sub crackUrl {
@@ -185,27 +201,28 @@ sub getTVHUrl {
 # }
 
 sub getStreamURL {
-	my ($class, $url) = @_;
-	return unless $url;
-
-	my ($channelnumber) = $url =~ m{^tvh://stream\?channelnumber=([^\.]+)\&};
-    return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $channelnumber . Plugins::TVH::Prefs::getProfile();					
+	my ($class, $channelNumber) = @_;
+    return Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $channelNumber . Plugins::TVH::Prefs::getProfile();					
 }
 
-sub getUUID {
-	my ($class, $url) = @_;
-	return unless $url;
+sub getStationImage {
+	my ($class, $icon_public_url) = @_;
+	my $image = Plugins::TVH::Prefs::getApiUrlNoAuth() . $icon_public_url;
 
-	my ($uuid) = $url =~ m{\&uuid=(.*)\&};
-    return $uuid;					
+	if (head($image)) {
+		return $image;
+	}
+	else {
+		return "plugins/TVH/html/images/radio.png";
+	}
 }
 
-sub getIconURL {
+sub getStationName {
 	my ($class, $url) = @_;
 	return unless $url;
 
-	my ($uuid) = $url =~ m{\&icon=(.*)$};
-    return $uuid;					
+	my ($channelName) = $url =~ m{^tvh:\/\/stream\?station=([^\.]+)$};
+	return URI::Escape::uri_unescape($channelName);
 }
 
 1;

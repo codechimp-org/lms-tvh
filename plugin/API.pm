@@ -30,6 +30,14 @@ sub getStations {
 	_call('/api/channel/grid?limit=500', $cb);
 }
 
+sub getStation {
+	my ($class, $cb, $name) = @_;
+	_call('/api/channel/grid?limit=1&filter=[{"field":"name","type":"string","value":"' . $name . '"}]', sub {
+		my ($station) = @_;
+		$cb->((@$station)[0]);
+		});
+}
+
 sub getTags {
 	my ($class, $cb) = @_;
 	_call('/api/channeltag/list', $cb);
@@ -42,7 +50,11 @@ sub getRecordings {
 
 sub getEpg {
 	my ($class, $cb, $channel) = @_;
-	_call("/api/epg/events/grid?limit=1&channel=${channel}", $cb);
+
+	_call("/api/epg/events/grid?limit=1&channel=${channel}", sub {
+	my ($epg) = @_;
+	return (@$epg)[0];
+	});
 }
 
 sub _call {
