@@ -18,6 +18,8 @@ To stream audio to Logitech Media Server a specific audio profile must be create
 
 Optionally, if using TVHeadend security create a new user specifically for this plugin and set the default profile to be the one you just created above.
 
+Ensure that the "Use HTTP digest authentication" option within Configuration/General/Base is checked. Unchecking this is known to cause issues when calling the API.
+
 ### Plugin Installation
 Go to the Logitech Media Server Settings page. On the Plugins tab insert the repository URL for this plugin at the bottom of the page.
 
@@ -38,7 +40,7 @@ Stream and enjoy :)
 No support/warranty is offered on this plugin, help is provided on a best efforts basis.
 
 ## Contributing
-If you find something wrong then pull requests are welcome, or raise an issue.  Any error logs would be helpful to diagnosing issues.
+If you find something wrong then pull requests are welcome, or raise an issue. Any error logs would be helpful to diagnosing issues.
 
 Neither andrew-codechimp or dozigden are experienced perl programmers so it may take us some time to work out fixes.
 
