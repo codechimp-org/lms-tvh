@@ -78,7 +78,7 @@ sub _call {
 	# 	return;
 	# }
 	# elsif ( main::INFOLOG && $log->is_info ) {
-	 	$log->debug("API call: $url");
+	 	main::DEBUGLOG && $log->is_debug && $log->debug("API call: $url");
 	# }
 
 	Slim::Networking::SimpleAsyncHTTP->new(
