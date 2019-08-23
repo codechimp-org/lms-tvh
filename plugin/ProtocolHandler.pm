@@ -27,7 +27,7 @@ sub new {
 	my $song      = $args->{song};
 
 	my $stationName = getStationName($song->streamUrl());
-	$log->debug('new:' . $stationName);
+	main::DEBUGLOG && \\$log->is_debug && $log->debug('new:' . $stationName);
 
 	Plugins::TVH::API->getStation(sub {
 			my ($station) = @_;
@@ -87,7 +87,7 @@ sub getNextTrack {
 	my $nextURL = $song->currentTrack()->url;
 
 	my $stationName = getStationName($nextURL);
-	$log->debug('new:' . $stationName);
+	main::DEBUGLOG && \\$log->is_debug && $log->debug('new:' . $stationName);
 
 	Plugins::TVH::API->getStation(sub {
 			my ($callback, $station) = @_;
@@ -171,17 +171,17 @@ sub getIcon {
 	my ( $class, $url ) = @_;
 
 	my $stationName = $class->getStationName($url);
-	$log->debug('getIcon:' . $url . ':' . $stationName);
+	main::DEBUGLOG && \\$log->is_debug && $log->debug('getIcon:' . $url . ':' . $stationName);
 
 	my($image);
 
 	Plugins::TVH::API->getStation(sub {
 			my ($station) = @_;
 			$image = $class->getStationImage($station->{icon_public_url});	
-			$log->debug('getIconImage:' . $image);
+			main::DEBUGLOG && \\$log->is_debug && $log->debug('getIconImage:' . $image);
 		}, $stationName);
 
-	$log->debug('getIcon:' . $image);
+	main::DEBUGLOG && \\$log->is_debug && $log->debug('getIcon:' . $image);
 	return $image;
 }
 
