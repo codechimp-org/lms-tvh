@@ -89,7 +89,7 @@ sub _call {
 			my $result;
 
 			if ( $response->headers->content_type =~ /json/i ) {
-				$log->info('TVH got a response: ' . $response->content);
+				main::INFOLOG && $log->is_info && $log->info('TVH got a response: ' . $response->content);
 				$result = eval{ from_json($response->content) };
 			}
 			else {
