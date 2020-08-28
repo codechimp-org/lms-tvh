@@ -1,6 +1,6 @@
 # This workflow will build the package, manually triggered
 
-name: Package workflow
+name: Package
 
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
@@ -26,14 +26,46 @@ jobs:
         id: read_version
         uses: christian-draeger/read-properties@1.0.1
         with:
-          path: "publish.properties"
-          property: "VERSION"
+          path: 'publish.properties'
+          property: 'VERSION'
 
       # Create a full version number with the Run Number suffix
       - name: Create full version number
         uses: jwulf/add-env-vars-action@1.0
         with:
           map: '{"packageVersion": "${{ steps.read_version.outputs.value }}.${{ github.run_number }}"}'   
-      
-      - name: Show full version number
-        run: echo ${{ env.packageVersion }}
+
+      - name: Set version in install xml file
+        uses: Mudlet/xmlstarlet-action@v1.1
+        with:
+          args: edit -L --update "//extension/version" --value ${{ env.packageVersion }} plugin/install.xml
+
+      - name: Remove existing zip
+        run: |
+          git config --global user.name 'robot-codechimp'
+          git config --global user.email 'robot@codechimp.org'
+          git rm docs/*.zip
+          git commit -m "Remove old zip"
+
+      # Copy plugin and create ZIP
+      - name: Create zip and move to docs
+        run:  cp -r plugin TVH; zip -r tvh-${{ env.packageVersion }}.zip TVH/*; rm -rf TVH;rm -f docs/*.zip; mv tvh*.zip docs
+     
+      # Calculate sha1 of zip
+      - name: ZipSha
+        run: echo ::set-env name=sha::$(sha1sum docs/tvh-${{ env.packageVersion }}.zip | awk '{ print $1 }')     
+    
+     # Update repo xml with new filename/version and sha
+      - name: Set version and filename in repo xml file
+        uses: Mudlet/xmlstarlet-action@v1.1
+        with:
+          args: edit -L --update "//extensions/plugins/plugin/@version" --value ${{ env.packageVersion }} --update "//extensions/plugins/plugin/url" --value "https://tvh.codechimp.org/tvh-${{ env.packageVersion }}.zip" --update "//extensions/plugins/plugin/sha" --value "${{ env.sha }}" docs/repo.xml
+           
+      - name: Commit files
+        run: |
+          git config --global user.name 'robot-codechimp'
+          git config --global user.email 'robot@codechimp.org'
+          git add docs/*
+          git commit -am "Add new version"
+          git tag ${{ env.packageVersion }}
+          git push --tags
