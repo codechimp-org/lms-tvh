@@ -31,7 +31,7 @@ jobs:
 
       # Create a full version number with the Run Number suffix
       - name: Create full version number
-        run: echo "::set-env name=PACKAGE_VERSION::${steps.read_version.outputs.value}.${GITHUB_RUN_NUMBER}"
+        run: echo "::set-env name=PACKAGE_VERSION::${{steps.read_version.outputs.value}}.${{github.run_number}}"
 
       - name: Show full version number
         run: echo "$PACKAGE_VERSION"
