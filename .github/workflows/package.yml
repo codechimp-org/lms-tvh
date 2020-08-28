@@ -18,18 +18,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v2
-        with:
-          path: master
 
       # Get version from properties file
-      - name: Read value from Properties-file
+      - name: Read version from Properties-file
         id: read_property
         uses: christian-draeger/read-properties@1.0.1
         with:
-          path: './publish.properties'
-          property: 'VERSION'
-      - name: Do something with your bumped release version
+          path: "publish.properties"
+          property: "VERSION"
+
+      - name: Current Version
         run: echo ${{ steps.read_property.outputs.value }}
-        # will print "the value of 'the.key.of.the.property'"
