@@ -22,12 +22,16 @@ jobs:
         uses: actions/checkout@v2
 
       # Get version from properties file
-      - name: Read version from Properties-file
+      - name: Read version from Properties file
         id: read_property
         uses: christian-draeger/read-properties@1.0.1
         with:
           path: "publish.properties"
           property: "VERSION"
 
-      - name: Current Version
-        run: echo ${{ steps.read_property.outputs.value }}
+      # Create a full version number with the Run Number suffix
+      - name: Create version number
+        env: PACKAGE_VERSION: '${{ steps.read_property.outputs.value }}.$({ GITHUB_RUN_NUMBER })'
+
+      - name: Version
+        run: echo ${{ env.PACKAGE_VERSION }}
