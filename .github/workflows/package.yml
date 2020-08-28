@@ -33,5 +33,5 @@ jobs:
       - name: Create full version number
         run: echo ${{ env.PACKAGE_VERSION }}
         env:
-          PACKAGE_VERSION: "${{steps.read_version.outputs.value}}.$GITHUB_RUN_NUMBER"
+          PACKAGE_VERSION: "${{steps.read_version.outputs.value}}.${{env.GITHUB_RUN_NUMBER}}"
      
