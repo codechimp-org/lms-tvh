@@ -7,12 +7,12 @@
   <id>e7c9277a-f0ad-4bbc-94a9-de2e019b1a2c</id>
   <module>Plugins::TVH::Plugin</module>
   <optionsURL>plugins/TVH/settings/basic.html</optionsURL>
-  <icon>plugins/TVH/icon.png</icon>
+  <icon>plugins/TVH/icon_svg.png</icon>
   <targetApplication>
     <id>SqueezeCenter</id>
     <maxVersion>*</maxVersion>
     <minVersion>7.7.6</minVersion>
   </targetApplication>
   <type>2</type>
-  <version>1.0.94</version>
+  <version>1.0.95</version>
 </extension>
