@@ -59,6 +59,8 @@ jobs:
      
       # Calculate sha1 of zip
       - name: ZipSha
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: echo ::set-env name=sha::$(sha1sum docs/tvh-${{ env.packageVersion }}.zip | awk '{ print $1 }')     
     
      # Update repo xml with new filename/version and sha
