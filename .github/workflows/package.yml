@@ -65,11 +65,15 @@ jobs:
     
      # Update repo xml with new filename/version and sha
       - name: Set version and filename in repo xml file
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         uses: Mudlet/xmlstarlet-action@v1.1
         with:
           args: edit -L --update "//extensions/plugins/plugin/@version" --value ${{ env.packageVersion }} --update "//extensions/plugins/plugin/url" --value "https://tvh.codechimp.org/tvh-${{ env.packageVersion }}.zip" --update "//extensions/plugins/plugin/sha" --value "${{ env.sha }}" docs/repo.xml
            
       - name: Commit files
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           git config --global user.name 'robot-codechimp'
           git config --global user.email 'robot@codechimp.org'
