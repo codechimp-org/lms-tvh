@@ -24,7 +24,7 @@ jobs:
       # Get version from properties file
       - name: Read version from Properties file
         run: |
-          echo "VERSION=`${cat publish.properties | grep "VERSION" | cut -d'=' -f2}`" >> $GITHUB_ENV
+          echo "VERSION=`${{cat publish.properties | grep "VERSION" | cut -d'=' -f2}}`" >> $GITHUB_ENV
 
       # Create a full version number with the Run Number suffix
       - name: Set full version number
