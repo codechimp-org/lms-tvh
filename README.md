@@ -39,6 +39,10 @@ Stream and enjoy :)
 ## Disclaimer
 No support/warranty is offered on this plugin, help is provided on a best efforts basis.
 
+## Releasing
+The version property in the publish.properties file should be incremented if a functional release.  
+After checkin the GitHub Package Action should be run manually to create the new zip, update the repo.xml and create a new tag/release based on the version & run number. 
+
 ## Contributing
 If you find something wrong then pull requests are welcome, or raise an issue. Any error logs would be helpful to diagnosing issues.
 
