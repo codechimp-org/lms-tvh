@@ -23,28 +23,21 @@ jobs:
 
       # Get version from properties file
       - name: Read version from Properties file
-        id: read_version
-        uses: christian-draeger/read-properties@1.0.1
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        with:
-          path: 'publish.properties'
-          property: 'VERSION'
+        run: |
+          echo "VERSION=`cat publish.properties | grep "VERSION" | cut -d'=' -f2`" >> $GITHUB_ENV
 
       # Create a full version number with the Run Number suffix
-      - name: Create full version number
-        uses: jwulf/add-env-vars-action@1.0
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        with:
-          map: '{"packageVersion": "${{ steps.read_version.outputs.value }}.${{ github.run_number }}"}'   
+      - name: Set full version number
+        run: |
+          echo "PACKAGEVERSION=`echo ${{ env.VERSION }}.${{ github.run_number }}`" >> $GITHUB_ENV
 
-      - name: Set version in install xml file
-        uses: Mudlet/xmlstarlet-action@v1.1
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      # Update install xml with package version
+      - name: Create install XML file
+        uses: cuchi/jinja2-action@v1.2.0
         with:
-          args: edit -L --update "//extension/version" --value ${{ env.packageVersion }} plugin/install.xml
+          template: install.template.xml
+          output_file: TVH/install.xml
+          strict: true
 
       - name: Remove existing zip
         run: |
@@ -55,29 +48,32 @@ jobs:
 
       # Copy plugin and create ZIP
       - name: Create zip and move to docs
-        run:  cp -r plugin TVH; zip -r tvh-${{ env.packageVersion }}.zip TVH/*; rm -rf TVH;rm -f docs/*.zip; mv tvh*.zip docs
+        run:  zip -r tvh-${{ env.PACKAGEVERSION }}.zip TVH/*; rm -f docs/*.zip; mv tvh*.zip docs
      
-      # Calculate sha1 of zip
-      - name: ZipSha
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: echo ::set-env name=sha::$(sha1sum docs/tvh-${{ env.packageVersion }}.zip | awk '{ print $1 }')     
-    
-     # Update repo xml with new filename/version and sha
-      - name: Set version and filename in repo xml file
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        uses: Mudlet/xmlstarlet-action@v1.1
+      # Calculate sha1 of zip    
+      - name: Calculate SHA
+        run: |
+          echo "SHA=$(shasum docs/tvh-${{ env.PACKAGEVERSION }}.zip | awk '{print $1;}')" >> $GITHUB_ENV
+
+      # Update repo xml with new filename/version and sha
+      - name: Create release public XML file
+        uses: cuchi/jinja2-action@v1.2.0
         with:
-          args: edit -L --update "//extensions/plugins/plugin/@version" --value ${{ env.packageVersion }} --update "//extensions/plugins/plugin/url" --value "https://tvh.codechimp.org/tvh-${{ env.packageVersion }}.zip" --update "//extensions/plugins/plugin/sha" --value "${{ env.sha }}" docs/repo.xml
-           
+          template: repo.template.xml
+          output_file: docs/repo.xml
+          strict: true
+
       - name: Commit files
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           git config --global user.name 'robot-codechimp'
           git config --global user.email 'robot@codechimp.org'
           git add docs/*
           git commit -am "Add new version"
-          git tag ${{ env.packageVersion }}
+          git tag ${{ env.PACKAGEVERSION }}
           git push --tags
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
