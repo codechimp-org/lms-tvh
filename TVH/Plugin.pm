@@ -177,7 +177,7 @@ sub _renderStations {
 						line2 => $station->{number},
 						type => 'audio',
 						image => _getStationImage($station->{icon_public_url}),  
-						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channelnumber/' . $station->{number} . Plugins::TVH::Prefs::getProfile()
+						url => Plugins::TVH::Prefs::getApiUrl() . 'stream/channel/' . $station->{uuid} . Plugins::TVH::Prefs::getProfile()
 					}
 				}
 			}
