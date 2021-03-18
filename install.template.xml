@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<extension>
   <name>PLUGIN_TVH</name>
   <creator>Andrew Jackson, Luke Easter</creator>
   <defaultState>enabled</defaultState>
@@ -7,7 +8,7 @@
   <id>e7c9277a-f0ad-4bbc-94a9-de2e019b1a2c</id>
   <module>Plugins::TVH::Plugin</module>
   <optionsURL>plugins/TVH/settings/basic.html</optionsURL>
-  <icon>plugins/TVH/icon_svg.png</icon>
+  <icon>plugins/TVH/html/images/icon_svg.png</icon>
   <targetApplication>
     <id>SqueezeCenter</id>
     <maxVersion>*</maxVersion>
