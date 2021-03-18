@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<extension>
   <name>PLUGIN_TVH</name>
   <creator>Andrew Jackson, Luke Easter</creator>
   <defaultState>enabled</defaultState>
@@ -14,5 +15,5 @@
     <minVersion>7.7.6</minVersion>
   </targetApplication>
   <type>2</type>
-  <version>1.2.29</version>
+  <version>1.3.30</version>
 </extension>
