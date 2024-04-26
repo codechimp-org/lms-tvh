@@ -1,17 +1,17 @@
 # lms-tvh
-lms-tvh is a plugin for Logitech Media Server to allow playing of live radio streams from TVHeadend.
+lms-tvh is a plugin for Lyrion Media Server (Logitech Media Server) to allow playing of live radio streams from TVHeadend.
 
 ![alt text](https://github.com/codechimp-org/lms-tvh/raw/master/resources/lms-tvh-systemdiagram.png "System Diagram")
 
 ## Configuration
 ### TVHeadend Configuration
-To stream audio to Logitech Media Server a specific audio profile must be created.
+To stream audio to Lyrion Media Server a specific audio profile must be created.
 
 * Within TVHeadend go to the Configuration Tab/Stream/Stream Profiles
 * Ensure your View level is set to Expert, otherwise you will not see all options
 * Add a Stream Profile
 * Choose Type - Transcode/av-lib
-* Name your profile squeeze (case sensitive, you will enter this later into the TVH plugin settings on Logitech Media Server)
+* Name your profile squeeze (case sensitive, you will enter this later into the TVH plugin settings on Lyrion Media Server)
 * Container: Raw Audio Stream
 * Audio Codec: aac (depending on your TVHeadend installation you may have to experiment with other codec's)
 * Press Create to save your new profile
@@ -21,17 +21,17 @@ Optionally, if using TVHeadend security create a new user specifically for this 
 Ensure that the "Use HTTP digest authentication" option within Configuration/General/Base is checked. Unchecking this is known to cause issues when calling the API.
 
 ### Plugin Installation
-Go to the Logitech Media Server Settings page. On the Plugins tab, under 3rd Party Plugins enable TVH.
+Go to the Lyrion Media Server Settings page. On the Plugins tab, under 3rd Party Plugins enable TVH.
 
-Press Apply and restart the Logitech Media Server. 
+Press Apply and restart the Lyrion Media Server. 
 
-### Logitech Media Server Configuration & Use
-On the Logitech Media Server Settings page/Advanced tab choose TVH in the top left drop down.
+### Lyrion Media Server Configuration & Use
+On the Lyrion Media Server Settings page/Advanced tab choose TVH in the top left drop down.
 
 Provide your TVHeadend server details, username and password if using security and the profile name if not the default profile for the user or you are not using security.  
 Save your settings
 
-Within the Logitech Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.  
+Within the Lyrion Media Server home page you will now have TVH under My Apps where you can browse your TVHeadend Tags/Stations.  
 Stream and enjoy :)
 
 ## Disclaimer
