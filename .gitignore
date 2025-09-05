@@ -2,3 +2,5 @@
 .vscode
 deploy-ips.ps1
 Icon?
+.DS_Store
+Thumbs.db
