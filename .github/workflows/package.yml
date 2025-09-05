@@ -2,12 +2,10 @@
 
 name: Package
 
-
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
   workflow_dispatch:
-
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -41,16 +39,16 @@ jobs:
 
       - name: Remove existing zip
         run: |
-          git config --global user.name 'robot-codechimp'
-          git config --global user.email 'robot@codechimp.org'
+          git config --global user.name 'andrew-codechimp'
+          git config --global user.email 'andrew@codechimp.org'
           git rm docs/*.zip
           git commit -m "Remove old zip"
 
       # Copy plugin and create ZIP
       - name: Create zip and move to docs
-        run:  zip -r tvh-${{ env.PACKAGEVERSION }}.zip TVH/*; rm -f docs/*.zip; mv tvh*.zip docs
-     
-      # Calculate sha1 of zip    
+        run: zip -r tvh-${{ env.PACKAGEVERSION }}.zip TVH/*; rm -f docs/*.zip; mv tvh*.zip docs
+
+      # Calculate sha1 of zip
       - name: Calculate SHA
         run: |
           echo "SHA=$(shasum docs/tvh-${{ env.PACKAGEVERSION }}.zip | awk '{print $1;}')" >> $GITHUB_ENV
@@ -65,8 +63,8 @@ jobs:
 
       - name: Commit files
         run: |
-          git config --global user.name 'robot-codechimp'
-          git config --global user.email 'robot@codechimp.org'
+          git config --global user.name 'andrew-codechimp'
+          git config --global user.email 'andrew@codechimp.org'
           git add docs/*
           git commit -am "Add new version"
           git tag ${{ env.PACKAGEVERSION }}
@@ -83,4 +81,3 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.PACKAGEVERSION }}
-          
