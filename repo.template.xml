@@ -9,7 +9,7 @@
       <title lang="EN">TVH</title>
       <email>squeeze@codechimp.org</email>
       <url>https://tvh.codechimp.org/tvh-{{ env['PACKAGEVERSION'] }}.zip</url>
-      <link>https://github.com/andrew-codechimp/lms-tvh</link>
+      <link>https://tvh.codechimp.org</link>
       <sha>{{ env['SHA'] }}</sha>
       <creator>Andrew Jackson, Luke Easter</creator>
     </plugin>
