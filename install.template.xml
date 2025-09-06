@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension>
   <name>PLUGIN_TVH</name>
-  <creator>Andrew Jackson, Luke Easter</creator>
+  <creator>CodeChimp</creator>
   <homepageURL>https://tvh.codechimp.org</homepageURL>
   <defaultState>enabled</defaultState>
   <description>PLUGIN_TVH_DESC</description>
