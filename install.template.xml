@@ -4,7 +4,6 @@
   <creator>Andrew Jackson, Luke Easter</creator>
   <defaultState>enabled</defaultState>
   <description>PLUGIN_TVH_DESC</description>
-  <email>squeeze@codechimp.org</email>
   <id>e7c9277a-f0ad-4bbc-94a9-de2e019b1a2c</id>
   <module>Plugins::TVH::Plugin</module>
   <optionsURL>plugins/TVH/settings/basic.html</optionsURL>
