@@ -7,7 +7,6 @@
     <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="{{ env['PACKAGEVERSION'] }}">
       <desc lang="EN">TVHeadend Radio Plugin for Lyrion Media Server</desc>
       <title lang="EN">TVH</title>
-      <email>squeeze@codechimp.org</email>
       <url>https://tvh.codechimp.org/tvh-{{ env['PACKAGEVERSION'] }}.zip</url>
       <link>https://tvh.codechimp.org</link>
       <sha>{{ env['SHA'] }}</sha>
