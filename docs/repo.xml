@@ -4,12 +4,12 @@
     <title lang="EN">TVH</title>
   </details>
   <plugins>
-    <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="1.4.37">
+    <plugin maxTarget="*" name="TVH" minTarget="7.7.6" version="1.4.38">
       <desc lang="EN">TVHeadend Radio Plugin for Lyrion Media Server</desc>
       <title lang="EN">TVH</title>
-      <url>https://tvh.codechimp.org/tvh-1.4.37.zip</url>
+      <url>https://tvh.codechimp.org/tvh-1.4.38.zip</url>
       <link>https://tvh.codechimp.org</link>
-      <sha>3efb740394da4321422aecf1726efc824e659505</sha>
+      <sha>10ccda729d29083ca37adacac843f62d2e5891e8</sha>
       <creator>CodeChimp</creator>
     </plugin>
   </plugins>
