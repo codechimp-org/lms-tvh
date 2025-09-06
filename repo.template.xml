@@ -10,7 +10,7 @@
       <url>https://tvh.codechimp.org/tvh-{{ env['PACKAGEVERSION'] }}.zip</url>
       <link>https://tvh.codechimp.org</link>
       <sha>{{ env['SHA'] }}</sha>
-      <creator>Andrew Jackson, Luke Easter</creator>
+      <creator>CodeChimp</creator>
     </plugin>
   </plugins>
 </extensions>
